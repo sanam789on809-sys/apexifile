@@ -42,119 +42,104 @@ try {
     // Ignore, table will be created by DatabaseUpgrade shortly
 }
 ?>
-<div class="dashboard-widgets-container" id="dashboard-widgets">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <?php if ($dept_id): ?>
-        <?php if ($is_head): ?>
-            <!-- Department Head Widgets -->
-            <div class="widget-container w-100">
-                <div class="ps-card">
-                    <div class="ps-card-header"><h3 class="ps-card-title"><?php _e('Department Head Actions', 'cftp_admin'); ?></h3></div>
-                    <div class="ps-card-body">
-                        <div class="row text-center">
-                            <div class="col-sm-4">
-                                <h5><?php _e('Pending Approvals', 'cftp_admin'); ?></h5>
-                                <a href="approvals.php" class="btn btn-warning"><?php _e('View Approvals', 'cftp_admin'); ?></a>
-                            </div>
-                            <div class="col-sm-4">
-                                <h5><?php _e('Team Tasks', 'cftp_admin'); ?></h5>
-                                <a href="tasks.php" class="btn btn-info"><?php _e('Manage Tasks', 'cftp_admin'); ?></a>
-                            </div>
-                            <div class="col-sm-4">
-                                <h5><?php _e('Department Stats', 'cftp_admin'); ?></h5>
-                                <p class="text-muted"><?php _e('coming soon', 'cftp_admin'); ?></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="row mb-4">
+    <div class="col-xl-8 col-lg-7">
+        <div class="ps-card h-100">
+            <div class="ps-card-header d-flex justify-content-between align-items-center">
+                <h3 class="ps-card-title mb-0"><?php _e('Task Analytics', 'cftp_admin'); ?></h3>
             </div>
-        <?php else: ?>
-            <!-- Standard Employee Widgets -->
-            <div class="widget-container w-100">
-                <div class="ps-card">
-                    <div class="ps-card-header"><h3 class="ps-card-title"><?php _e('Employee Dashboard', 'cftp_admin'); ?></h3></div>
-                    <div class="ps-card-body">
-                        <div class="row text-center">
-                            <div class="col-sm-4">
-                                <h5><?php _e('Assigned Tasks', 'cftp_admin'); ?></h5>
-                                <a href="tasks.php" class="btn btn-info"><?php _e('View My Tasks', 'cftp_admin'); ?></a>
-                            </div>
-                            <div class="col-sm-4">
-                                <h5><?php _e('Recent Documents', 'cftp_admin'); ?></h5>
-                                <a href="manage-files.php" class="btn btn-primary"><?php _e('View Files', 'cftp_admin'); ?></a>
-                            </div>
-                            <div class="col-sm-4">
-                                <h5><?php _e('Shared Files', 'cftp_admin'); ?></h5>
-                                <a href="approvals.php" class="btn btn-secondary"><?php _e('View Requests', 'cftp_admin'); ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="ps-card-body">
+                <?php
+                // Fetch task counts
+                $stmt_stats = $dbh->prepare("SELECT status, COUNT(*) as count FROM " . TABLE_TASKS . " GROUP BY status");
+                $stmt_stats->execute();
+                $stats = ['Pending' => 0, 'In Progress' => 0, 'Waiting Review' => 0, 'Completed' => 0];
+                while ($row = $stmt_stats->fetch(PDO::FETCH_ASSOC)) {
+                    $status = $row['status'] ?: 'Pending';
+                    $stats[$status] += $row['count'];
+                }
+                ?>
+                <canvas id="tasksChart" style="max-height: 350px;"></canvas>
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var ctx = document.getElementById('tasksChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Pending', 'In Progress', 'Waiting Review', 'Completed'],
+                            datasets: [{
+                                data: [
+                                    <?php echo $stats['Pending']; ?>,
+                                    <?php echo $stats['In Progress']; ?>,
+                                    <?php echo $stats['Waiting Review']; ?>,
+                                    <?php echo $stats['Completed']; ?>
+                                ],
+                                backgroundColor: [
+                                    '#6c757d', // Secondary
+                                    '#0d6efd', // Primary
+                                    '#fd7e14', // Warning
+                                    '#198754'  // Success
+                                ],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom' }
+                            },
+                            cutout: '70%'
+                        }
+                    });
+                });
+                </script>
             </div>
-        <?php endif; ?>
-    <?php elseif (current_role_in(['Client'])): ?>
-        <!-- Client Widgets -->
-        <div class="widget-container w-100">
-            <div class="ps-card">
-                <div class="ps-card-header"><h3 class="ps-card-title"><?php _e('Client Dashboard', 'cftp_admin'); ?></h3></div>
-                <div class="ps-card-body">
-                    <div class="row text-center">
-                        <div class="col-sm-3">
-                            <h5><?php _e('Uploaded Files', 'cftp_admin'); ?></h5>
-                            <a href="<?php echo BASE_URI; ?>manage-files.php" class="btn btn-primary"><?php _e('View My Files', 'cftp_admin'); ?></a>
-                        </div>
-                        <div class="col-sm-3">
-                            <h5><?php _e('Shared Documents', 'cftp_admin'); ?></h5>
-                            <a href="<?php echo BASE_URI; ?>manage-files.php" class="btn btn-info"><?php _e('View Shared', 'cftp_admin'); ?></a>
-                        </div>
-                        <div class="col-sm-3">
-                            <h5><?php _e('Support Tickets', 'cftp_admin'); ?></h5>
-                            <a href="<?php echo BASE_URI; ?>support.php" class="btn btn-warning"><?php _e('Get Support', 'cftp_admin'); ?></a>
-                        </div>
-                        <div class="col-sm-3">
-                            <h5><?php _e('Notifications', 'cftp_admin'); ?></h5>
-                            <a href="<?php echo BASE_URI; ?>notifications.php" class="btn btn-secondary"><?php _e('View Alerts', 'cftp_admin'); ?></a>
-                        </div>
-                    </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-4 col-lg-5">
+        <div class="ps-card h-100">
+            <div class="ps-card-header">
+                <h3 class="ps-card-title mb-0"><?php _e('Activity Feed', 'cftp_admin'); ?></h3>
+            </div>
+            <div class="ps-card-body p-0">
+                <div class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
+                    <?php
+                    // Fetch recent tasks
+                    $stmt_feed = $dbh->prepare("SELECT title, status, updated_at FROM " . TABLE_TASKS . " ORDER BY updated_at DESC LIMIT 5");
+                    $stmt_feed->execute();
+                    while ($feed = $stmt_feed->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<div class="list-group-item">';
+                        echo '  <div class="d-flex w-100 justify-content-between align-items-center">';
+                        echo '    <h6 class="mb-1 text-truncate" style="max-width: 70%;">' . html_output($feed['title']) . '</h6>';
+                        echo '    <small class="text-muted">' . date('M j, g:i a', strtotime($feed['updated_at'])) . '</small>';
+                        echo '  </div>';
+                        echo '  <p class="mb-1 small">Status changed to <strong>' . html_output($feed['status']) . '</strong></p>';
+                        echo '</div>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>
-    <?php endif; ?>    <?php if (current_user_can('view_statistics')) { ?>
+    </div>
+</div>
+
+<div class="dashboard-widgets-container" id="dashboard-widgets">
+    <!-- Existing widgets kept below -->
+    <?php if (current_user_can('view_statistics')) { ?>
         <div class="widget-container" data-widget="statistics">
             <?php include_once WIDGETS_FOLDER . 'statistics.php'; ?>
         </div>
     <?php } ?>
-
-
-
     <?php if (current_user_can('view_system_info')) { ?>
         <div class="widget-container" data-widget="system-info">
             <?php include_once WIDGETS_FOLDER . 'system-information.php'; ?>
         </div>
     <?php } ?>
-
-    <?php if (current_user_can('view_actions_log')) { ?>
-        <div class="widget-container" data-widget="actions-log">
-            <?php include_once WIDGETS_FOLDER . 'actions-log.php'; ?>
-        </div>
-    <?php } ?>
-
-
-    <?php if (current_user_can('view_storage_analytics')) { ?>
-        <div class="widget-container" data-widget="storage-analytics">
-            <?php include_once WIDGETS_FOLDER . 'storage-analytics.php'; ?>
-        </div>
-    <?php } ?>
-
-
-    <?php if (current_user_can('view_download_analytics')) { ?>
-        <div class="widget-container" data-widget="download-analytics">
-            <?php include_once WIDGETS_FOLDER . 'download-analytics.php'; ?>
-        </div>
-    <?php } ?>
-
-
-
 </div>
+
 <?php
 include_once ADMIN_VIEWS_DIR . DS . 'footer.php';
