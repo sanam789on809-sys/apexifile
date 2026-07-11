@@ -76,67 +76,92 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 }
 
 /* --- 3. Layout: Topbar & Sidebar Glassmorphism --- */
-.topbar {
+#header.navbar {
     background: var(--glass-bg) !important;
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border-bottom: 1px solid var(--glass-border);
     box-shadow: var(--shadow-soft);
-    position: sticky;
-    top: 0;
-    z-index: 50;
+}
+
+#header.navbar .nav > li > a {
+    color: var(--text-main) !important;
+    font-family: var(--font-heading);
+    font-weight: 500;
+}
+
+#header .navbar-brand {
+    color: var(--text-main) !important;
+    font-family: var(--font-heading);
+    font-weight: 700;
 }
 
 /* Sidebar Wrapper */
-.left-sidebar {
+.main_side_menu {
     background: var(--glass-bg) !important;
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border-right: 1px solid var(--glass-border) !important;
     box-shadow: var(--shadow-soft) !important;
-    margin: 16px !important;
+    margin: 80px 16px 16px 16px !important; /* Offset for topbar */
     border-radius: var(--radius-lg) !important;
-    height: calc(100vh - 32px) !important;
+    height: calc(100vh - 96px) !important;
     position: fixed;
     overflow: hidden;
     z-index: 40;
+    padding-top: 20px !important;
 }
 
 /* Page wrapper background removal so mesh shows through */
-#main-wrapper {
-    background: transparent !important;
-}
-
-.page-wrapper {
+.main_content {
     background: transparent !important;
     margin-left: 280px !important; /* Adjust based on sidebar width */
-    padding-top: 24px;
+    padding-top: 80px;
 }
 
 /* --- 4. Sidebar Menu Items --- */
-.sidebar-nav ul li a {
-    font-family: var(--font-body);
-    font-weight: 500;
+.main_menu li a {
+    font-family: var(--font-body) !important;
+    font-weight: 500 !important;
     color: var(--text-muted) !important;
     border-radius: var(--radius-md) !important;
-    margin: 4px 12px;
-    transition: all 0.3s ease;
+    margin: 4px 12px !important;
+    transition: all 0.3s ease !important;
+    padding: 10px 16px !important;
+    border: none !important;
+    background: transparent !important;
 }
 
-.sidebar-nav ul li a:hover,
-.sidebar-nav ul li a.active {
+.main_menu li a:hover,
+.main_menu li.current_nav > a,
+.main_menu li.current_page > a {
     background: var(--glass-bg) !important;
     color: #4F46E5 !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
     transform: translateX(4px);
 }
 
-.sidebar-nav ul li a.active i {
-    color: #4F46E5 !important;
+.main_menu li a i {
+    color: inherit !important;
+    transition: all 0.3s ease;
+}
+
+/* Submenu */
+.main_menu li ul {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.main_menu li ul li a {
+    padding-left: 45px !important;
+    font-size: 0.9em !important;
+}
+.main_menu li ul li a:before {
+    display: none !important;
 }
 
 /* --- 5. Cards & Content Areas --- */
-.card, .ps-card {
+.card, .ps-card, .white-box, .widget {
     background: var(--glass-bg) !important;
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
@@ -145,71 +170,72 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     box-shadow: var(--shadow-soft) !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-    margin-bottom: 24px;
+    margin-bottom: 24px !important;
 }
 
-.card:hover, .ps-card:hover {
+.card:hover, .ps-card:hover, .white-box:hover, .widget:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lift) !important;
 }
 
-.card-header, .ps-card-header {
+.card-header, .ps-card-header, .widget h4 {
     background: transparent !important;
     border-bottom: 1px solid rgba(0,0,0,0.05) !important;
-    padding: 20px 24px;
+    padding: 20px 24px !important;
+    color: var(--text-main) !important;
 }
 
-.card-title, .ps-card-title {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--text-main);
+.card-title, .ps-card-title, .widget h4 {
+    font-family: var(--font-heading) !important;
+    font-weight: 700 !important;
+    font-size: 1.25rem !important;
+    color: var(--text-main) !important;
     margin: 0;
 }
 
-.card-body, .ps-card-body {
-    padding: 24px;
+.card-body, .ps-card-body, .white-box-interior, .widget_int {
+    padding: 24px !important;
 }
 
 /* --- 6. Form Inputs & Controls --- */
-.form-control, .form-select {
+.form-control, .form-select, input[type="text"], input[type="password"], input[type="email"] {
     background: rgba(255, 255, 255, 0.8) !important;
     border: 1px solid rgba(0,0,0,0.1) !important;
     border-radius: var(--radius-sm) !important;
-    padding: 10px 16px;
-    font-family: var(--font-body);
-    color: var(--text-main);
-    transition: all 0.3s ease;
+    padding: 10px 16px !important;
+    font-family: var(--font-body) !important;
+    color: var(--text-main) !important;
+    transition: all 0.3s ease !important;
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus, .form-select:focus, input:focus {
     background: #fff !important;
     border-color: #4F46E5 !important;
     box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1) !important;
-    outline: none;
+    outline: none !important;
 }
 
 /* --- 7. Buttons --- */
-.btn-primary, .btn-info, .btn-success {
+.btn, .btn-primary, .btn-info, .btn-success, .plupload_button {
     background: var(--primary-gradient) !important;
     border: none !important;
     border-radius: 50px !important; /* Pill shape */
-    padding: 10px 24px;
-    font-family: var(--font-heading);
-    font-weight: 600;
+    padding: 10px 24px !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 600 !important;
     color: #fff !important;
     letter-spacing: 0.5px;
     box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3) !important;
     transition: all 0.3s ease !important;
 }
 
-.btn-primary:hover, .btn-info:hover, .btn-success:hover {
+.btn:hover, .btn-primary:hover, .btn-info:hover, .btn-success:hover, .plupload_button:hover {
     background: var(--primary-gradient-hover) !important;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4) !important;
 }
 
-.btn-secondary, .btn-outline-primary {
+.btn-secondary, .btn-outline-primary, .btn-pslight {
     background: rgba(255, 255, 255, 0.5) !important;
     border: 1px solid var(--glass-border) !important;
     color: var(--text-main) !important;
@@ -217,57 +243,77 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     backdrop-filter: blur(10px);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover, .btn-pslight:hover {
     background: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* --- 8. Tables --- */
-.table {
+.table, .footable {
     background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
-.table th {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    color: var(--text-muted);
+.table th, .footable th {
+    font-family: var(--font-heading) !important;
+    font-weight: 600 !important;
+    color: var(--text-muted) !important;
     border-bottom: 2px solid rgba(0,0,0,0.05) !important;
-    padding: 16px;
+    padding: 16px !important;
+    text-transform: uppercase;
+    font-size: 0.85rem !important;
 }
-.table td {
-    padding: 16px;
-    vertical-align: middle;
+.table td, .footable td {
+    padding: 16px !important;
+    vertical-align: middle !important;
     border-bottom: 1px solid rgba(0,0,0,0.03) !important;
+    font-family: var(--font-body);
 }
-.table-hover tbody tr:hover {
+.table-hover tbody tr:hover, .footable tbody tr:hover td {
     background-color: rgba(255,255,255,0.4) !important;
 }
 
 /* --- 9. Badges & Micro-elements --- */
 .badge {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-weight: 500;
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    font-weight: 500 !important;
     letter-spacing: 0.3px;
 }
 .bg-info {
     background: linear-gradient(135deg, #38bdf8, #0ea5e9) !important;
+    border: none !important;
 }
 .bg-success {
     background: linear-gradient(135deg, #34d399, #10b981) !important;
+    border: none !important;
 }
 .bg-warning {
     background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+    border: none !important;
 }
 .bg-danger {
     background: linear-gradient(135deg, #f87171, #ef4444) !important;
+    border: none !important;
+}
+
+/* Section Title */
+#section_title h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
 }
 
 /* Responsiveness */
 @media (max-width: 767px) {
-    .page-wrapper {
+    .main_content {
         margin-left: 0 !important;
     }
-    .left-sidebar {
+    .main_side_menu {
         margin: 0 !important;
         border-radius: 0 !important;
+        height: 100vh !important;
     }
 }
