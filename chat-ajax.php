@@ -1,5 +1,10 @@
 <?php
+ob_start();
 require_once 'bootstrap.php';
+
+// If there was any HTML output (e.g. from warnings), discard it
+$buffered_output = ob_get_clean();
+
 header('Content-Type: application/json');
 
 if (!defined('CURRENT_USER_ID')) {

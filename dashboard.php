@@ -77,11 +77,12 @@ try {
                                     <?php echo $stats['Completed']; ?>
                                 ],
                                 backgroundColor: [
-                                    '#6c757d', // Secondary
-                                    '#0d6efd', // Primary
-                                    '#fd7e14', // Warning
-                                    '#198754'  // Success
+                                    '#94a3b8', // Slate 400
+                                    '#3b82f6', // Blue 500
+                                    '#f59e0b', // Amber 500
+                                    '#10b981'  // Emerald 500
                                 ],
+                                hoverOffset: 8,
                                 borderWidth: 0
                             }]
                         },
@@ -89,9 +90,22 @@ try {
                             responsive: true,
                             maintainAspectRatio: false,
                             plugins: {
-                                legend: { position: 'bottom' }
+                                legend: { 
+                                    position: 'bottom',
+                                    labels: {
+                                        padding: 20,
+                                        font: { family: "'Outfit', 'Inter', sans-serif", size: 13 }
+                                    }
+                                },
+                                tooltip: {
+                                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                    padding: 12,
+                                    titleFont: { family: "'Outfit', 'Inter', sans-serif", size: 14 },
+                                    bodyFont: { family: "'Outfit', 'Inter', sans-serif", size: 13 },
+                                    cornerRadius: 8
+                                }
                             },
-                            cutout: '70%'
+                            cutout: '75%'
                         }
                     });
                 });
@@ -101,23 +115,26 @@ try {
     </div>
     
     <div class="col-xl-4 col-lg-5">
-        <div class="ps-card h-100">
-            <div class="ps-card-header">
-                <h3 class="ps-card-title mb-0"><?php _e('Activity Feed', 'cftp_admin'); ?></h3>
+        <div class="ps-card h-100" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border-radius: 16px; border: 1px solid rgba(0,0,0,0.04);">
+            <div class="ps-card-header" style="border-bottom: 1px solid rgba(0,0,0,0.04);">
+                <h3 class="ps-card-title mb-0" style="font-weight: 700; color: #0f172a;"><i class="fa fa-bolt" style="color:#6366f1;"></i> <?php _e('Activity Feed', 'cftp_admin'); ?></h3>
             </div>
             <div class="ps-card-body p-0">
                 <div class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
                     <?php
                     // Fetch recent tasks
-                    $stmt_feed = $dbh->prepare("SELECT title, status, updated_at FROM " . TABLE_TASKS . " ORDER BY updated_at DESC LIMIT 5");
+                    $stmt_feed = $dbh->prepare("SELECT title, status, updated_at FROM " . TABLE_TASKS . " ORDER BY updated_at DESC LIMIT 6");
                     $stmt_feed->execute();
+                    if ($stmt_feed->rowCount() == 0) {
+                        echo '<div class="p-4 text-center text-muted">No recent activity</div>';
+                    }
                     while ($feed = $stmt_feed->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<div class="list-group-item">';
-                        echo '  <div class="d-flex w-100 justify-content-between align-items-center">';
-                        echo '    <h6 class="mb-1 text-truncate" style="max-width: 70%;">' . html_output($feed['title']) . '</h6>';
-                        echo '    <small class="text-muted">' . date('M j, g:i a', strtotime($feed['updated_at'])) . '</small>';
+                        echo '<div class="list-group-item list-group-item-action border-0" style="background: transparent; border-bottom: 1px solid rgba(0,0,0,0.04) !important; padding: 1.25rem 1.5rem; transition: background 0.2s;">';
+                        echo '  <div class="d-flex w-100 justify-content-between align-items-center mb-1">';
+                        echo '    <h6 class="mb-0 text-truncate" style="max-width: 70%; font-weight: 600; color: #1e293b;">' . html_output($feed['title']) . '</h6>';
+                        echo '    <small class="text-muted" style="font-size: 0.75rem;">' . date('M j, g:i a', strtotime($feed['updated_at'])) . '</small>';
                         echo '  </div>';
-                        echo '  <p class="mb-1 small">Status changed to <strong>' . html_output($feed['status']) . '</strong></p>';
+                        echo '  <p class="mb-0 small text-muted">Status changed to <strong style="color: #4f46e5;">' . html_output($feed['status']) . '</strong></p>';
                         echo '</div>';
                     }
                     ?>

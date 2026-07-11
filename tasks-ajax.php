@@ -3,8 +3,10 @@
  * Tasks AJAX Endpoint
  */
 $allowed_levels = array(9, 8, 7); // Admin, Department Head, Employee
+ob_start();
 require_once 'bootstrap.php';
 
+$buffered_output = ob_get_clean();
 header('Content-Type: application/json');
 
 if (!is_logged_in()) {

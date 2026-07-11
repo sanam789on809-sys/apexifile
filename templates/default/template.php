@@ -100,202 +100,120 @@ include_once LAYOUT_DIR . DS . 'folders-nav.php';
 
             <?php
             if (isset($count) && $count > 0) {
-                // Generate the table using the class.
-                $table = new \ProjectSend\Classes\Layout\Table([
-                    'id' => 'files_list',
-                    'class' => 'footable table',
-                    'origin' => CLIENT_VIEW_FILE_LIST_URL_PATH,
-                ]);
-
-                $thead_columns = array(
-                    array(
-                        'select_all' => true,
-                        'attributes' => array(
-                            'class' => array('td_checkbox'),
-                        ),
-                    ),
-                    array(
-                        'sortable' => true,
-                        'sort_url' => 'filename',
-                        'content' => __('Title', 'cftp_admin'),
-                    ),
-                    array(
-                        'content' => __('Type', 'cftp_admin'),
-                        'hide' => 'phone',
-                    ),
-                    array(
-                        'sortable' => true,
-                        'sort_url' => 'description',
-                        'content' => __('Description', 'cftp_admin'),
-                        'hide' => 'phone',
-                        'attributes' => array(
-                            'class' => array('description'),
-                        ),
-                    ),
-                    array(
-                        'content' => __('Size', 'cftp_admin'),
-                        'hide' => 'phone',
-                    ),
-                    array(
-                        'sortable' => true,
-                        'sort_url' => 'timestamp',
-                        'sort_default' => true,
-                        'content' => __('Date', 'cftp_admin'),
-                    ),
-                    array(
-                        'content' => __('Expiry', 'cftp_admin'),
-                        'hide' => 'phone',
-                    ),
-                    array(
-                        'content' => __('Preview', 'cftp_admin'),
-                        'hide' => 'phone,tablet',
-                    ),
-                    array(
-                        'content' => __('Download', 'cftp_admin'),
-                        'hide' => 'phone',
-                    ),
-                );
-
-                $table->thead($thead_columns);
+                ?>
+                <style>
+                .google-drive-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                    gap: 1.5rem;
+                    padding: 1rem 0;
+                }
+                .drive-card {
+                    background: #ffffff;
+                    border: 1px solid rgba(0,0,0,0.08);
+                    border-radius: 12px;
+                    padding: 1rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    position: relative;
+                    transition: transform 0.2s, box-shadow 0.2s;
+                    text-align: center;
+                }
+                .drive-card:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+                    border-color: rgba(79, 70, 229, 0.4);
+                }
+                .drive-card .batch_checkbox {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    transform: scale(1.2);
+                    cursor: pointer;
+                }
+                .drive-icon {
+                    width: 64px;
+                    height: 64px;
+                    margin-bottom: 1rem;
+                    color: #6366f1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 2.5rem;
+                }
+                .drive-thumbnail {
+                    width: 100%;
+                    height: 120px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    margin-bottom: 1rem;
+                }
+                .drive-title {
+                    font-family: var(--font-heading);
+                    font-weight: 600;
+                    font-size: 1rem;
+                    color: #1e293b;
+                    margin-bottom: 0.5rem;
+                    word-break: break-word;
+                    text-decoration: none;
+                }
+                .drive-meta {
+                    font-size: 0.8rem;
+                    color: #64748b;
+                    margin-bottom: 1rem;
+                }
+                .drive-actions {
+                    margin-top: auto;
+                    width: 100%;
+                    display: flex;
+                    gap: 0.5rem;
+                }
+                .drive-actions .btn {
+                    flex: 1;
+                }
+                </style>
+                <div class="google-drive-grid">
+                <?php
 
                 foreach ($available_files as $file_id) {
                     $file = new \ProjectSend\Classes\Files($file_id);
 
-                    $table->addRow();
+                    // Checkbox
+                    $checkbox = ($file->expired == false) ? '<input type="checkbox" name="files[]" value="' . $file->id . '" class="batch_checkbox" />' : '';
 
-                    /**
-                     * Prepare the information to be used later on the cells array
-                     */
-
-                    /** Checkbox */
-                    $checkbox = ($file->expired == false) ? '<input type="checkbox" name="files[]" value="' . $file->id . '" class="batch_checkbox" />' : null;
-
-                    /** File title */
-                    $file_title_content = '<strong>' . html_output($file->title) . '</strong>';
-                    if ($file->expired == false) {
-                        $title_content = '<a href="' . $file->download_link . '" target="_blank">' . $file_title_content . '</a>';
-                    } else {
-                        $title_content = $file_title_content;
-                    }
-                    $title_content = '<a href="' . $file->download_link . '" target="_blank">' . $file->title . '</a>';
-                    if ($file->title != $file->filename_original) {
-                        $title_content .= '<br><small>'.$file->filename_original.'</small>';
-                    }
-                    if (file_is_image($file->full_path)) {
-                        $dimensions = $file->getDimensions();
-                        if (!empty($dimensions)) {
-                            $title_content .= '<br><div class="file_meta"><small>'.$dimensions['width'].' x '.$dimensions['height'].' px</small></div>';
-                        }
-                    }
-
-
-
-                    /** Extension */
-                    $extension_cell = '<span class="badge bg-success label_big">' . $file->extension . '</span>';
-
-                    /** Date */
-                    $date = format_date($file->uploaded_date);
-
-                    /** Expiration */
-                    if ($file->expires == '1') {
-                        if ($file->expired == false) {
-                            $badge_class = 'bg-primary';
-                        } else {
-                            $badge_class = 'bg-danger';
-                        }
-
-                        $badge_label = date(get_option('timeformat'), strtotime($file->expiry_date));
-                    } else {
-                        $badge_class = 'bg-success';
-                        $badge_label = __('Never', 'cftp_template');
-                    }
-
-                    $expiration_cell = '<span class="badge ' . $badge_class . ' label_big">' . $badge_label . '</span>';
-
-                    /** Thumbnail */
-                    $preview_cell = '';
+                    // Preview / Thumbnail
+                    $preview_html = '<div class="drive-icon"><i class="fa fa-file-o"></i></div>';
                     if ($file->expired == false) {
                         if ($file->isImage()) {
-                            $thumbnail = make_thumbnail($file->full_path, null, TEMPLATE_THUMBNAILS_WIDTH, TEMPLATE_THUMBNAILS_HEIGHT);
+                            $thumbnail = make_thumbnail($file->full_path, null, 300, 200);
                             if (!empty($thumbnail['thumbnail']['url'])) {
-                                $preview_cell = '
-                                        <a href="#" class="get-preview" data-url="' . BASE_URI . 'process.php?do=get_preview&file_id=' . $file->id . '">
-                                            <img src="' . $thumbnail['thumbnail']['url'] . '" class="thumbnail" alt="' . $file->title . '" />
-                                        </a>';
+                                $preview_html = '<img src="' . $thumbnail['thumbnail']['url'] . '" class="drive-thumbnail" alt="' . html_output($file->title) . '" />';
                             }
-                        } else {
-                            if ($file->embeddable) {
-                                $preview_cell = '<button class="btn btn-warning btn-sm btn-wide get-preview" data-url="' . BASE_URI . 'process.php?do=get_preview&file_id=' . $file->id . '">' . __('Preview', 'cftp_admin') . '</button>';
-                            }
+                        } else if ($file->embeddable) {
+                            $preview_html = '<div class="drive-icon get-preview" style="cursor:pointer;" data-url="' . BASE_URI . 'process.php?do=get_preview&file_id=' . $file->id . '"><i class="fa fa-eye"></i></div>';
                         }
                     }
 
-                    /** Download */
+                    // Download
                     if ($file->expired == true) {
-                        $download_link = 'javascript:void(0);';
-                        $download_btn_class = 'btn btn-danger btn-sm disabled';
-                        $download_text = __('File expired', 'cftp_template');
+                        $download_btn = '<a href="javascript:void(0);" class="btn btn-danger btn-sm disabled w-100">' . __('Expired', 'cftp_template') . '</a>';
                     } else {
-                        $download_btn_class = 'btn btn-primary btn-sm btn-wide';
-                        $download_text = __('Download', 'cftp_template');
-                    }
-                    $download_cell = '<a href="' . $file->download_link . '" class="' . $download_btn_class . '" target="_blank">' . $download_text . '</a>';
-
-
-
-                    $tbody_cells = array(
-                        array(
-                            'content' => $checkbox,
-                        ),
-                        array(
-                            'content' => $title_content,
-                            'attributes' => array(
-                                'class' => array('file_name'),
-                            ),
-                        ),
-                        array(
-                            'content' => $extension_cell,
-                            'attributes' => array(
-                                'class' => array('extra'),
-                            ),
-                        ),
-                        array(
-                            'content' => format_description($file->description),
-                            'attributes' => array(
-                                'class' => array('description'),
-                            ),
-                        ),
-                        array(
-                            'content' => $file->size_formatted,
-                        ),
-                        array(
-                            'content' => $date,
-                        ),
-                        array(
-                            'content' => $expiration_cell,
-                        ),
-                        array(
-                            'content' => $preview_cell,
-                            'attributes' => array(
-                                'class' => array('extra'),
-                            ),
-                        ),
-                        array(
-                            'content' => $download_cell,
-                            'attributes' => array(
-                                'class' => array('text-center'),
-                            ),
-                        ),
-                    );
-
-                    foreach ($tbody_cells as $cell) {
-                        $table->addCell($cell);
+                        $download_btn = '<a href="' . $file->download_link . '" class="btn btn-primary btn-sm w-100" target="_blank"><i class="fa fa-download"></i> ' . __('Download', 'cftp_template') . '</a>';
                     }
 
-                    $table->end_row();
+                    $date = format_date($file->uploaded_date);
+                    $size = $file->size_formatted;
+
+                    echo '<div class="drive-card">';
+                    echo $checkbox;
+                    echo $preview_html;
+                    echo '<a href="' . $file->download_link . '" target="_blank" class="drive-title">' . html_output($file->title) . '</a>';
+                    echo '<div class="drive-meta">' . $size . ' &bull; ' . $date . '</div>';
+                    echo '<div class="drive-actions">' . $download_btn . '</div>';
+                    echo '</div>';
                 }
-
-                echo $table->render();
+                echo '</div>';
             }
             ?>
         </div>
