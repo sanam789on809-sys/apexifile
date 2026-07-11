@@ -2,6 +2,7 @@
 function upgrade_2026071101()
 {
     global $dbh;
+    global $updates_error_messages;
 
     // Create Departments Table
     if (!table_exists(TABLE_DEPARTMENTS)) {
@@ -15,7 +16,7 @@ function upgrade_2026071101()
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
         ";
         $statement = $dbh->prepare($query);
-        $statement->execute();
+        try { $statement->execute(); } catch (\PDOException $e) { $updates_error_messages[] = $e->getMessage(); }
     }
 
     // Create Department Members Table
@@ -32,7 +33,7 @@ function upgrade_2026071101()
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
         ";
         $statement = $dbh->prepare($query);
-        $statement->execute();
+        try { $statement->execute(); } catch (\PDOException $e) { $updates_error_messages[] = $e->getMessage(); }
     }
 
     // Create Tasks Table
@@ -58,7 +59,7 @@ function upgrade_2026071101()
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
         ";
         $statement = $dbh->prepare($query);
-        $statement->execute();
+        try { $statement->execute(); } catch (\PDOException $e) { $updates_error_messages[] = $e->getMessage(); }
     }
 
     // Create Tickets Table
@@ -78,7 +79,7 @@ function upgrade_2026071101()
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
         ";
         $statement = $dbh->prepare($query);
-        $statement->execute();
+        try { $statement->execute(); } catch (\PDOException $e) { $updates_error_messages[] = $e->getMessage(); }
     }
 
     // Create Ticket Replies Table
@@ -98,7 +99,7 @@ function upgrade_2026071101()
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
         ";
         $statement = $dbh->prepare($query);
-        $statement->execute();
+        try { $statement->execute(); } catch (\PDOException $e) { $updates_error_messages[] = $e->getMessage(); }
     }
 
     // Create Approvals Table
@@ -123,7 +124,7 @@ function upgrade_2026071101()
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
         ";
         $statement = $dbh->prepare($query);
-        $statement->execute();
+        try { $statement->execute(); } catch (\PDOException $e) { $updates_error_messages[] = $e->getMessage(); }
     }
 
     // Create File Versions Table
@@ -142,6 +143,7 @@ function upgrade_2026071101()
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
         ";
         $statement = $dbh->prepare($query);
-        $statement->execute();
+        try { $statement->execute(); } catch (\PDOException $e) { $updates_error_messages[] = $e->getMessage(); }
     }
 }
+
