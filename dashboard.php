@@ -88,7 +88,6 @@ if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 </div>
             </div>
         <?php endif; ?>
-        <?php endif; ?>
     <?php elseif (current_role_in(['Client'])): ?>
         <!-- Client Widgets -->
         <div class="widget-container w-100">
