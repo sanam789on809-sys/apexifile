@@ -8,6 +8,19 @@ require_once 'bootstrap.php';
 $page_title = __('Departments', 'cftp_admin');
 $page_id = 'departments';
 
+if ($_POST && isset($_POST['action']) && $_POST['action'] == 'delete') {
+    if (validateCsrfToken()) {
+        $dept_id = (int)$_POST['department_id'];
+        $department = new \ProjectSend\Classes\Departments($dept_id);
+        if ($department->delete()) {
+            $flash->success(__('Department deleted successfully.', 'cftp_admin'));
+        } else {
+            $flash->error(__('Failed to delete department.', 'cftp_admin'));
+        }
+        ps_redirect('departments.php');
+    }
+}
+
 include_once ADMIN_VIEWS_DIR . DS . 'header.php';
 ?>
 
@@ -44,7 +57,15 @@ include_once ADMIN_VIEWS_DIR . DS . 'header.php';
                             echo '<td><span class="badge bg-secondary">' . html_output($row['members_count']) . '</span></td>';
                             echo '<td>' . html_output($row['created_at']) . '</td>';
                             echo '<td>
-                                    <a href="departments-edit.php?id=' . $row['id'] . '" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                    <div class="btn-group">
+                                        <a href="departments-edit.php?id=' . $row['id'] . '" class="btn btn-sm btn-primary" title="' . __('Edit', 'cftp_admin') . '"><i class="fa fa-edit"></i></a>
+                                        <form action="departments.php" method="post" class="d-inline" onsubmit="return confirm(\'' . __('Are you sure you want to delete this department?', 'cftp_admin') . '\');">
+                                            <input type="hidden" name="csrf_token" value="' . getCsrfToken() . '">
+                                            <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="department_id" value="' . $row['id'] . '">
+                                            <button type="submit" class="btn btn-sm btn-danger" title="' . __('Delete', 'cftp_admin') . '"><i class="fa fa-trash"></i></button>
+                                        </form>
+                                    </div>
                                   </td>';
                             echo '</tr>';
                         }
