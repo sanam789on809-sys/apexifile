@@ -1,0 +1,181 @@
+/* 
+ * MaterialPro Theme Overrides for ProjectSend
+ * This applies the aesthetic of MaterialPro React Lite to the Bootstrap backend.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --mp-primary: #1B84FF;
+    --mp-primary-light: #EDF5FD;
+    --mp-secondary: #43CED7;
+    --mp-success: #2cd07e;
+    --mp-info: #725AF2;
+    --mp-warning: #F6C000;
+    --mp-error: #F8285A;
+    --mp-bg: #EEF5F9;
+    --mp-text-primary: #3A4752;
+    --mp-text-secondary: #768B9E;
+    --mp-divider: #ebf1f6;
+    --mp-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: 'Poppins', sans-serif !important;
+    background-color: var(--mp-bg) !important;
+    color: var(--mp-text-primary) !important;
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    color: var(--mp-text-primary);
+}
+
+.text-muted {
+    color: var(--mp-text-secondary) !important;
+}
+
+/* Card Overrides */
+.ps-card, .card {
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: var(--mp-shadow) !important;
+    margin-bottom: 24px;
+    background-color: #ffffff;
+}
+
+.ps-card-header, .card-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid var(--mp-divider) !important;
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+    padding: 20px 24px !important;
+}
+
+.ps-card-body, .card-body {
+    padding: 24px !important;
+}
+
+.ps-card-title, .card-title {
+    font-size: 1.125rem !important;
+    font-weight: 600 !important;
+    margin: 0;
+}
+
+/* Button Overrides */
+.btn {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    border-radius: 30px !important; /* Pill shaped buttons */
+    padding: 8px 24px !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-sm {
+    padding: 5px 15px !important;
+    font-size: 0.875rem !important;
+}
+
+.btn-primary {
+    background-color: var(--mp-primary) !important;
+    border-color: var(--mp-primary) !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover {
+    background-color: #156dd1 !important;
+    border-color: #156dd1 !important;
+}
+
+.btn-secondary {
+    background-color: var(--mp-secondary) !important;
+    border-color: var(--mp-secondary) !important;
+    color: #fff !important;
+}
+
+.btn-success {
+    background-color: var(--mp-success) !important;
+    border-color: var(--mp-success) !important;
+    color: #fff !important;
+}
+
+.btn-info {
+    background-color: var(--mp-info) !important;
+    border-color: var(--mp-info) !important;
+    color: #fff !important;
+}
+
+.btn-warning {
+    background-color: var(--mp-warning) !important;
+    border-color: var(--mp-warning) !important;
+    color: #fff !important;
+}
+
+.btn-danger {
+    background-color: var(--mp-error) !important;
+    border-color: var(--mp-error) !important;
+    color: #fff !important;
+}
+
+/* Form Input Overrides */
+.form-control, .form-select {
+    border-radius: 7px !important;
+    border: 1px solid #e5eaef !important;
+    font-family: 'Poppins', sans-serif !important;
+    color: var(--mp-text-primary) !important;
+    padding: 10px 15px !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--mp-primary) !important;
+    box-shadow: none !important;
+}
+
+.form-control::placeholder {
+    color: var(--mp-text-secondary) !important;
+}
+
+/* Table Overrides */
+.table {
+    color: var(--mp-text-primary) !important;
+}
+
+.table th {
+    font-weight: 600 !important;
+    border-bottom: 1px solid var(--mp-divider) !important;
+    border-top: none !important;
+    color: var(--mp-text-secondary);
+}
+
+.table td {
+    border-bottom: 1px solid var(--mp-divider) !important;
+    vertical-align: middle !important;
+}
+
+/* Badges */
+.badge {
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    padding: 6px 10px !important;
+}
+
+.bg-primary { background-color: var(--mp-primary) !important; }
+.bg-secondary { background-color: var(--mp-secondary) !important; }
+.bg-success { background-color: var(--mp-success) !important; }
+.bg-info { background-color: var(--mp-info) !important; }
+.bg-warning { background-color: var(--mp-warning) !important; }
+.bg-danger { background-color: var(--mp-error) !important; }
+
+/* List Group */
+.list-group-item {
+    border-color: var(--mp-divider) !important;
+}
+
+/* Navbar / Sidebar overrides (if applicable) */
+.navbar, .sidebar {
+    background-color: #ffffff !important;
+    box-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.02) !important;
+}

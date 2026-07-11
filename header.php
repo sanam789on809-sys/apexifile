@@ -60,7 +60,10 @@ totp_setup_required();
     <?php
         render_assets('js', 'head');
         render_assets('css', 'head');
-
+    ?>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo BASE_URI; ?>css/materialpro-theme.css">
+    <?php
         render_custom_assets('head');
     ?>
 </head>
