@@ -110,6 +110,50 @@
         <?php endif; ?>
 
         <?php
+            // Global MaterialPro Polish
+        ?>
+        <style>
+            /* Global Fade-in Animation */
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .main-content {
+                animation: fadeIn 0.4s ease-out forwards;
+            }
+
+            /* Improved Form Elements */
+            .form-control, .form-select {
+                border-radius: 8px !important;
+                border: 1px solid #ced4da;
+                transition: all 0.2s ease;
+                box-shadow: none !important;
+            }
+            .form-control:focus, .form-select:focus {
+                border-color: #0d6efd;
+                box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15) !important;
+            }
+            
+            /* Sleeker Buttons */
+            .btn {
+                border-radius: 8px;
+                font-weight: 500;
+                transition: all 0.2s;
+            }
+            .btn:active {
+                transform: scale(0.98);
+            }
+
+            /* Card Polish */
+            .ps-card {
+                border: none;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                border-radius: 12px;
+                background: #fff;
+            }
+        </style>
+
+        <?php
             render_json_variables();
             
             render_assets('js', 'footer');
