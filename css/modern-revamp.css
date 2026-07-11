@@ -26,6 +26,8 @@ body {
     background-color: transparent !important;
     margin: 0;
     overflow-x: hidden;
+    font-size: 1.1rem !important;
+    line-height: 1.6 !important;
 }
 
 h1, h2, h3, h4, h5, h6, .navbar-brand {
@@ -361,6 +363,8 @@ label, .control-label {
     vertical-align: middle !important;
     border-bottom: 1px solid rgba(0,0,0,0.03) !important;
     font-family: var(--font-body);
+    font-size: 1.05rem !important;
+    color: #334155 !important;
 }
 .table-hover tbody tr:hover, .footable tbody tr:hover td {
     background-color: rgba(255,255,255,0.4) !important;
