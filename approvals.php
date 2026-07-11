@@ -23,6 +23,15 @@ if ($_POST && isset($_POST['action'])) {
             $result = $approval->requestApproval();
             if ($result['status'] === 'success') {
                 $flash->success($result['message']);
+                
+                // Notify department heads
+                $stmt = $dbh->prepare("SELECT user_id FROM " . TABLE_DEPARTMENT_MEMBERS . " WHERE department_id = :dept_id AND is_head = 1");
+                $stmt->bindParam(':dept_id', $_POST['department_id'], PDO::PARAM_INT);
+                $stmt->execute();
+                $notifier = new \ProjectSend\Classes\InternalNotifications();
+                while ($head = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $notifier->addNotification($head['user_id'], __('New approval request received', 'cftp_admin'), 'approvals.php');
+                }
             } else {
                 $flash->error($result['message']);
             }
@@ -35,6 +44,11 @@ if ($_POST && isset($_POST['action'])) {
                     $success = $approval->process($_POST['status'], CURRENT_USER_ID, $_POST['comments']);
                     if ($success) {
                         $flash->success(__('Approval processed successfully.', 'cftp_admin'));
+                        
+                        // Notify requester
+                        $notifier = new \ProjectSend\Classes\InternalNotifications();
+                        $status_str = ($_POST['status'] == 'Approved') ? __('approved', 'cftp_admin') : __('rejected', 'cftp_admin');
+                        $notifier->addNotification($approval->requester_id, sprintf(__('Your approval request was %s', 'cftp_admin'), $status_str), 'approvals.php');
                     } else {
                         $flash->error(__('Error processing approval.', 'cftp_admin'));
                     }

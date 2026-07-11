@@ -6,10 +6,10 @@ require_once 'bootstrap.php';
 // Dashboard is accessible to all logged-in non-client users
 redirect_if_not_logged_in();
 
-// Clients should use their own dashboard
-if (current_role_in(['Client'])) {
-    ps_redirect(BASE_URI . 'my_files/');
-}
+// Clients used to be redirected, but now they use the main dashboard.
+// if (current_role_in(['Client'])) {
+//     ps_redirect(BASE_URI . 'my_files/');
+// }
 
 $page_title = __('Dashboard', 'cftp_admin');
 
@@ -88,9 +88,35 @@ if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 </div>
             </div>
         <?php endif; ?>
-    <?php endif; ?>
-
-    <?php if (current_user_can('view_statistics')) { ?>
+        <?php endif; ?>
+    <?php elseif (current_role_in(['Client'])): ?>
+        <!-- Client Widgets -->
+        <div class="widget-container w-100">
+            <div class="ps-card">
+                <div class="ps-card-header"><h3 class="ps-card-title"><?php _e('Client Dashboard', 'cftp_admin'); ?></h3></div>
+                <div class="ps-card-body">
+                    <div class="row text-center">
+                        <div class="col-sm-3">
+                            <h5><?php _e('Uploaded Files', 'cftp_admin'); ?></h5>
+                            <a href="<?php echo BASE_URI; ?>manage-files.php" class="btn btn-primary"><?php _e('View My Files', 'cftp_admin'); ?></a>
+                        </div>
+                        <div class="col-sm-3">
+                            <h5><?php _e('Shared Documents', 'cftp_admin'); ?></h5>
+                            <a href="<?php echo BASE_URI; ?>manage-files.php" class="btn btn-info"><?php _e('View Shared', 'cftp_admin'); ?></a>
+                        </div>
+                        <div class="col-sm-3">
+                            <h5><?php _e('Support Tickets', 'cftp_admin'); ?></h5>
+                            <a href="<?php echo BASE_URI; ?>support.php" class="btn btn-warning"><?php _e('Get Support', 'cftp_admin'); ?></a>
+                        </div>
+                        <div class="col-sm-3">
+                            <h5><?php _e('Notifications', 'cftp_admin'); ?></h5>
+                            <a href="<?php echo BASE_URI; ?>notifications.php" class="btn btn-secondary"><?php _e('View Alerts', 'cftp_admin'); ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>    <?php if (current_user_can('view_statistics')) { ?>
         <div class="widget-container" data-widget="statistics">
             <?php include_once WIDGETS_FOLDER . 'statistics.php'; ?>
         </div>

@@ -41,9 +41,41 @@ if ($_POST && isset($_POST['create_task'])) {
             $result = $task->create();
             if ($result['status'] === 'success') {
                 $flash->success($result['message']);
+                
+                // Notify assignee
+                $notifier = new \ProjectSend\Classes\InternalNotifications();
+                $notifier->addNotification($_POST['assignee'], __('You have been assigned a new task: ', 'cftp_admin') . $_POST['title'], 'tasks.php');
             } else {
                 $flash->error($result['message']);
             }
+        }
+    }
+    ps_redirect('tasks.php');
+}
+
+if ($_POST && isset($_POST['update_task'])) {
+    if (validateCsrfToken()) {
+        $task_id = (int)$_POST['task_id'];
+        $new_status = $_POST['status'];
+        
+        $stmt_update = $dbh->prepare("UPDATE " . TABLE_TASKS . " SET status = :status WHERE id = :id AND assignee_id = :uid");
+        $stmt_update->bindParam(':status', $new_status);
+        $stmt_update->bindParam(':id', $task_id, PDO::PARAM_INT);
+        $stmt_update->bindParam(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
+        
+        if ($stmt_update->execute()) {
+            $flash->success(__('Task status updated successfully.', 'cftp_admin'));
+            
+            // Notify assigner
+            $stmt_get = $dbh->prepare("SELECT assigner_id, title FROM " . TABLE_TASKS . " WHERE id = :id");
+            $stmt_get->bindParam(':id', $task_id, PDO::PARAM_INT);
+            $stmt_get->execute();
+            if ($t = $stmt_get->fetch(PDO::FETCH_ASSOC)) {
+                $notifier = new \ProjectSend\Classes\InternalNotifications();
+                $notifier->addNotification($t['assigner_id'], __('Task status updated to ', 'cftp_admin') . $new_status . ': ' . $t['title'], 'tasks.php');
+            }
+        } else {
+            $flash->error(__('Error updating task status.', 'cftp_admin'));
         }
     }
     ps_redirect('tasks.php');
@@ -88,7 +120,16 @@ include_once ADMIN_VIEWS_DIR . DS . 'header.php';
                             echo '<td>' . html_output($row['due_date']) . '</td>';
                             echo '<td><span class="badge bg-info">' . html_output($row['status']) . '</span></td>';
                             echo '<td>
-                                    <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                    <form action="tasks.php" method="post" class="d-inline">
+                                        <input type="hidden" name="csrf_token" value="' . getCsrfToken() . '">
+                                        <input type="hidden" name="update_task" value="1">
+                                        <input type="hidden" name="task_id" value="' . $row['id'] . '">
+                                        <select name="status" class="form-select form-select-sm d-inline-block w-auto" onchange="this.form.submit()">
+                                            <option value="Pending" ' . ($row['status'] == 'Pending' ? 'selected' : '') . '>' . __('Pending', 'cftp_admin') . '</option>
+                                            <option value="In Progress" ' . ($row['status'] == 'In Progress' ? 'selected' : '') . '>' . __('In Progress', 'cftp_admin') . '</option>
+                                            <option value="Waiting Review" ' . ($row['status'] == 'Waiting Review' ? 'selected' : '') . '>' . __('Waiting Review', 'cftp_admin') . '</option>
+                                        </select>
+                                    </form>
                                   </td>';
                             echo '</tr>';
                         }

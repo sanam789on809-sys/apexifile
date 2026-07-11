@@ -427,6 +427,15 @@ if (!current_role_in(['Client'])) {
 
 // Items for clients
 else {
+    $items['dashboard'] = array(
+        'nav' => 'dashboard',
+        'main' => array(
+            'label' => __('Dashboard', 'cftp_admin'),
+            'link' => 'dashboard.php',
+            'icon' => 'tachometer',
+        ),
+    );
+
     if (current_user_can('upload')) {
         $items['upload'] = array(
             'nav' => 'upload',
@@ -465,6 +474,15 @@ else {
             'label' => __('Support Tickets', 'cftp_admin'),
             'link' => 'support.php',
             'icon' => 'life-ring',
+        ),
+    );
+
+    $items['notifications'] = array(
+        'nav' => 'notifications',
+        'main' => array(
+            'label' => __('Notifications', 'cftp_admin'),
+            'link' => 'notifications.php',
+            'icon' => 'bell',
         ),
     );
 }

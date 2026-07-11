@@ -94,7 +94,7 @@ class Auth
             $results = [
                 'status' => 'success',
                 'user_id' => $user->id,
-                'location' => $user->isClient() ? CLIENT_VIEW_FILE_LIST_URL : BASE_URI."dashboard.php",
+                'location' => BASE_URI."dashboard.php",
             ];
 
             return json_encode($results);
@@ -197,7 +197,7 @@ class Auth
             $results = [
                 'status' => 'success',
                 'user_id' => $user->id,
-                'location' => $user->isClient() ? CLIENT_VIEW_FILE_LIST_URL : BASE_URI . "dashboard.php",
+                'location' => BASE_URI."dashboard.php",
             ];
 
             if ($is_backup) {
@@ -324,7 +324,7 @@ class Auth
 					$results = [
                         'status' => 'success',
                         'user_id' => $user->id,
-                        'location' => $user->isClient() ? CLIENT_VIEW_FILE_LIST_URL : BASE_URI."dashboard.php",
+                        'location' => BASE_URI."dashboard.php",
 					];
                     
                     return json_encode($results);
@@ -404,12 +404,7 @@ class Auth
                         'affected_account_name' => $user->name
                     ]);
 
-					if ($user->isClient()) {
-                        ps_redirect(CLIENT_VIEW_FILE_LIST_URL);
-					}
-					else {
                         ps_redirect(BASE_URI.'dashboard.php');
-					}
 				}
 				else {
                     $this->setError($this->getAccountInactiveError());
@@ -479,7 +474,7 @@ class Auth
 
                 if ($auto_enable) {
                     $this->authenticate($username, $password);
-                    $redirect_to = 'my_files/index.php';
+                    $redirect_to = 'dashboard.php';
                 }
 
                 // Redirect
@@ -659,7 +654,7 @@ class Auth
                                 $return = [
                                     'status' => 'success',
                                     'user_id' => $user->id,
-                                    'location' => $user->isClient() ? CLIENT_VIEW_FILE_LIST_URL : BASE_URI."dashboard.php",
+                                    'location' => BASE_URI."dashboard.php",
                                 ];
                     
                                 return json_encode($return);
@@ -695,7 +690,7 @@ class Auth
                                     $return = [
                                         'status' => 'success',
                                         'user_id' => $user->id,
-                                        'location' => $user->isClient() ? CLIENT_VIEW_FILE_LIST_URL : BASE_URI."dashboard.php",
+                                        'location' => BASE_URI."dashboard.php",
                                     ];
                         
                                     return json_encode($return);
