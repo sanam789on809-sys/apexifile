@@ -64,9 +64,68 @@ totp_setup_required();
         render_assets('js', 'head');
         render_assets('css', 'head');
     ?>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo BASE_URI; ?>css/materialpro-theme.css">
     <link rel="stylesheet" href="<?php echo BASE_URI; ?>css/modern-revamp.css?v=<?php echo time(); ?>">
+    <style id="sidebar-cache-buster-override">
+    /* Force overriding the sidebar styling directly in HTML to bypass aggressive browser caching */
+    .main_side_menu {
+        background: #ffffff !important;
+        border-right: 1px solid rgba(0, 0, 0, 0.05) !important;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.02) !important;
+    }
+    .main_menu li.separator {
+        border-top: 1px solid #f1f5f9 !important;
+        margin: 20px 12px 20px 12px !important;
+    }
+    .main_menu li a {
+        font-family: 'Poppins', sans-serif !important;
+        font-weight: 800 !important; /* Extremely bold */
+        font-size: 1.25rem !important; /* Huge font */
+        color: #334155 !important; /* Dark Slate Blue */
+        border-radius: 12px !important;
+        margin: 6px 0 !important;
+        padding: 16px 20px !important; /* Massive padding */
+        letter-spacing: 0.02em !important;
+    }
+    .main_menu li a:hover {
+        background: #f8fafc !important;
+        color: #0f172a !important;
+    }
+    .main_menu li.current_nav > a,
+    .main_menu li.current_page > a {
+        background: #eff6ff !important;
+        color: #4F46E5 !important;
+        font-weight: 800 !important;
+    }
+    .main_menu li.current_nav > a::before,
+    .main_menu li.current_page > a::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 55%;
+        background: #4F46E5 !important;
+        border-radius: 8px 0 0 8px;
+    }
+    .main_menu li a i {
+        font-size: 1.6rem !important; /* Massive icons */
+        margin-right: 24px !important;
+        color: #64748b !important;
+    }
+    .main_menu li.current_nav > a i,
+    .main_menu li.current_page > a i {
+        color: #4F46E5 !important;
+    }
+    .main_menu li ul li a {
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        color: #475569 !important;
+        padding: 12px 16px 12px 28px !important;
+    }
+    </style>
     <?php
         render_custom_assets('head');
     ?>
