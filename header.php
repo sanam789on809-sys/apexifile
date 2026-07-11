@@ -64,14 +64,16 @@ totp_setup_required();
         render_assets('js', 'head');
         render_assets('css', 'head');
     ?>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo BASE_URI; ?>css/materialpro-theme.css">
+    <link rel="stylesheet" href="<?php echo BASE_URI; ?>css/modern-revamp.css">
     <?php
         render_custom_assets('head');
     ?>
 </head>
 
 <body <?php echo add_body_class( $body_class ); ?> <?php if (!empty($page_id)) { echo add_page_id($page_id); } ?>>
+    <div class="mesh-background"></div>
     <?php include_once LAYOUT_DIR . DS . 'header-top.php'; ?>
     <?php include_once LAYOUT_DIR . DS . 'main-menu.php'; ?>
 

@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Modern SaaS Glassmorphism Revamp for ProjectSend
+   ========================================================================== */
+
+/* --- 1. Typography & Global Variables --- */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-blur: blur(20px);
+    --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #EC4899 100%);
+    --primary-gradient-hover: linear-gradient(135deg, #4338CA 0%, #DB2777 100%);
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+    --shadow-lift: 0 20px 40px rgba(79, 70, 229, 0.15);
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 8px;
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--font-body) !important;
+    color: var(--text-main);
+    background-color: transparent !important;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: var(--font-heading) !important;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+/* --- 2. Mesh Background Animation --- */
+.mesh-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-color: #fdfcff;
+    overflow: hidden;
+}
+
+.mesh-background::before, .mesh-background::after {
+    content: '';
+    position: absolute;
+    width: 80vw;
+    height: 80vh;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+    animation: drift 20s infinite alternate ease-in-out;
+}
+
+.mesh-background::before {
+    top: -20vh;
+    left: -20vw;
+    background: radial-gradient(circle, #e0c3fc 0%, rgba(224,195,252,0) 70%);
+}
+
+.mesh-background::after {
+    bottom: -20vh;
+    right: -10vw;
+    background: radial-gradient(circle, #8ec5fc 0%, rgba(142,197,252,0) 70%);
+    animation-delay: -10s;
+}
+
+@keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(10vw, 5vh) scale(1.1); }
+}
+
+/* --- 3. Layout: Topbar & Sidebar Glassmorphism --- */
+.topbar {
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-soft);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* Sidebar Wrapper */
+.left-sidebar {
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-right: 1px solid var(--glass-border) !important;
+    box-shadow: var(--shadow-soft) !important;
+    margin: 16px !important;
+    border-radius: var(--radius-lg) !important;
+    height: calc(100vh - 32px) !important;
+    position: fixed;
+    overflow: hidden;
+    z-index: 40;
+}
+
+/* Page wrapper background removal so mesh shows through */
+#main-wrapper {
+    background: transparent !important;
+}
+
+.page-wrapper {
+    background: transparent !important;
+    margin-left: 280px !important; /* Adjust based on sidebar width */
+    padding-top: 24px;
+}
+
+/* --- 4. Sidebar Menu Items --- */
+.sidebar-nav ul li a {
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--text-muted) !important;
+    border-radius: var(--radius-md) !important;
+    margin: 4px 12px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav ul li a:hover,
+.sidebar-nav ul li a.active {
+    background: var(--glass-bg) !important;
+    color: #4F46E5 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transform: translateX(4px);
+}
+
+.sidebar-nav ul li a.active i {
+    color: #4F46E5 !important;
+}
+
+/* --- 5. Cards & Content Areas --- */
+.card, .ps-card {
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-soft) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.card:hover, .ps-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift) !important;
+}
+
+.card-header, .ps-card-header {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+    padding: 20px 24px;
+}
+
+.card-title, .ps-card-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.card-body, .ps-card-body {
+    padding: 24px;
+}
+
+/* --- 6. Form Inputs & Controls --- */
+.form-control, .form-select {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 10px 16px;
+    font-family: var(--font-body);
+    color: var(--text-main);
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    background: #fff !important;
+    border-color: #4F46E5 !important;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1) !important;
+    outline: none;
+}
+
+/* --- 7. Buttons --- */
+.btn-primary, .btn-info, .btn-success {
+    background: var(--primary-gradient) !important;
+    border: none !important;
+    border-radius: 50px !important; /* Pill shape */
+    padding: 10px 24px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: #fff !important;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-primary:hover, .btn-info:hover, .btn-success:hover {
+    background: var(--primary-gradient-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4) !important;
+}
+
+.btn-secondary, .btn-outline-primary {
+    background: rgba(255, 255, 255, 0.5) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--text-main) !important;
+    border-radius: 50px !important;
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* --- 8. Tables --- */
+.table {
+    background: transparent !important;
+}
+.table th {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 2px solid rgba(0,0,0,0.05) !important;
+    padding: 16px;
+}
+.table td {
+    padding: 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(0,0,0,0.03) !important;
+}
+.table-hover tbody tr:hover {
+    background-color: rgba(255,255,255,0.4) !important;
+}
+
+/* --- 9. Badges & Micro-elements --- */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+.bg-info {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9) !important;
+}
+.bg-success {
+    background: linear-gradient(135deg, #34d399, #10b981) !important;
+}
+.bg-warning {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+}
+.bg-danger {
+    background: linear-gradient(135deg, #f87171, #ef4444) !important;
+}
+
+/* Responsiveness */
+@media (max-width: 767px) {
+    .page-wrapper {
+        margin-left: 0 !important;
+    }
+    .left-sidebar {
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+}

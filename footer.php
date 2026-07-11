@@ -5,30 +5,30 @@
         
         <?php if (defined('CURRENT_USER_ID')): ?>
         <!-- Team Chat Widget -->
-        <div id="team-chat-widget" style="position: fixed; bottom: 20px; right: 20px; width: 350px; background: #fff; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 9999; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--bs-border-color); transform: translateY(calc(100% - 50px)); transition: transform 0.3s ease;">
+        <div id="team-chat-widget" style="position: fixed; bottom: 30px; right: 30px; width: 350px; background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); z-index: 9999; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.6); transform: translateY(calc(100% - 60px)); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
             <!-- Header -->
-            <div id="chat-header" class="bg-primary text-white p-3 d-flex justify-content-between align-items-center" style="cursor: pointer; height: 50px;">
-                <h6 class="mb-0 m-0"><i class="fa fa-comments me-2"></i> Team Chat</h6>
+            <div id="chat-header" class="p-3 d-flex justify-content-between align-items-center" style="cursor: pointer; height: 60px; background: linear-gradient(135deg, #4F46E5 0%, #EC4899 100%); color: white;">
+                <h6 class="mb-0 m-0" style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.1rem;"><i class="fa fa-comments me-2"></i> Team Chat</h6>
                 <i class="fa fa-chevron-up" id="chat-toggle-icon"></i>
             </div>
             <!-- Messages Area -->
-            <div id="chat-messages" class="p-3 bg-light" style="height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+            <div id="chat-messages" class="p-3" style="height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: transparent;">
                 <!-- Messages injected here via JS -->
             </div>
             <!-- Input Area -->
-            <div class="p-3 bg-white border-top">
-                <form id="chat-form" class="d-flex m-0">
-                    <input type="text" id="chat-input" class="form-control me-2" placeholder="Type a message..." autocomplete="off" required>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
+            <div class="p-3 border-top" style="background: rgba(255, 255, 255, 0.5); border-color: rgba(0,0,0,0.05) !important;">
+                <form id="chat-form" class="d-flex m-0 align-items-center gap-2">
+                    <input type="text" id="chat-input" class="form-control" placeholder="Type a message..." autocomplete="off" required style="border-radius: 20px; background: rgba(255,255,255,0.9);">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 50%; width: 42px; height: 42px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fa fa-paper-plane" style="margin-left: -2px;"></i></button>
                 </form>
             </div>
         </div>
 
         <style>
-            .chat-msg { max-width: 85%; padding: 8px 12px; border-radius: 15px; font-size: 0.9rem; }
-            .chat-msg.me { background: #0d6efd; color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
-            .chat-msg.them { background: #e9ecef; color: #333; align-self: flex-start; border-bottom-left-radius: 5px; }
-            .chat-sender { font-size: 0.75rem; margin-bottom: 2px; opacity: 0.8; }
+            .chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 0.9rem; font-family: 'Inter', sans-serif; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+            .chat-msg.me { background: linear-gradient(135deg, #4F46E5, #4338CA); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+            .chat-msg.them { background: #ffffff; color: #1e293b; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid rgba(0,0,0,0.05); }
+            .chat-sender { font-size: 0.75rem; margin-bottom: 4px; opacity: 0.8; font-weight: 500; }
         </style>
 
         <script>
@@ -109,49 +109,7 @@
         </script>
         <?php endif; ?>
 
-        <?php
-            // Global MaterialPro Polish
-        ?>
-        <style>
-            /* Global Fade-in Animation */
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .main-content {
-                animation: fadeIn 0.4s ease-out forwards;
-            }
 
-            /* Improved Form Elements */
-            .form-control, .form-select {
-                border-radius: 8px !important;
-                border: 1px solid #ced4da;
-                transition: all 0.2s ease;
-                box-shadow: none !important;
-            }
-            .form-control:focus, .form-select:focus {
-                border-color: #0d6efd;
-                box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15) !important;
-            }
-            
-            /* Sleeker Buttons */
-            .btn {
-                border-radius: 8px;
-                font-weight: 500;
-                transition: all 0.2s;
-            }
-            .btn:active {
-                transform: scale(0.98);
-            }
-
-            /* Card Polish */
-            .ps-card {
-                border: none;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-                border-radius: 12px;
-                background: #fff;
-            }
-        </style>
 
         <?php
             render_json_variables();
