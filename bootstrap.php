@@ -5,6 +5,7 @@
 
 // Debugging: Force display of all errors to bypass server config causing 500 errors
 set_exception_handler(function($e) {
+    file_put_contents(__DIR__ . '/debug_exception.log', "Uncaught exception: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine() . "\n" . $e->getTraceAsString());
     die("<b>Uncaught exception:</b> " . $e->getMessage() . "<br>in <b>" . $e->getFile() . "</b> on line <b>" . $e->getLine() . "</b><br><pre>" . $e->getTraceAsString() . "</pre>");
 });
 register_shutdown_function(function() {
