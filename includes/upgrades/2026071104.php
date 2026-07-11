@@ -5,9 +5,9 @@ function upgrade_2026071104()
     global $updates_error_messages;
 
     // Create Chat Messages Table
-    if (!table_exists(TABLES_PREFIX . 'chat_messages')) {
+    if (!table_exists(TABLE_CHAT_MESSAGES)) {
         $statement = $dbh->prepare("
-            CREATE TABLE IF NOT EXISTS `" . TABLES_PREFIX . "chat_messages` (
+            CREATE TABLE IF NOT EXISTS `" . TABLE_CHAT_MESSAGES . "` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `sender_id` int(11) NOT NULL,
                 `message` text NOT NULL,
