@@ -2,9 +2,9 @@
 $this->current_version = '2026071104';
 
 // Create Chat Messages Table
-if (!table_exists(TABLE_PREFIX . 'chat_messages')) {
+if (!table_exists(TABLES_PREFIX . 'chat_messages')) {
     $statement = $this->dbh->prepare("
-        CREATE TABLE IF NOT EXISTS `" . TABLE_PREFIX . "chat_messages` (
+        CREATE TABLE IF NOT EXISTS `" . TABLES_PREFIX . "chat_messages` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `sender_id` int(11) NOT NULL,
             `message` text NOT NULL,
