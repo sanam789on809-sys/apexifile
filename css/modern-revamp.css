@@ -115,11 +115,9 @@ h3 { font-size: 1.5rem !important; font-weight: 600 !important; }
 
 /* Sidebar Wrapper */
 .main_side_menu {
-    background: rgba(255, 255, 255, 0.98) !important;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(0, 0, 0, 0.06) !important;
-    box-shadow: 4px 0 24px rgba(0,0,0,0.02) !important;
+    background: #0f172a !important; /* Slate 900 */
+    border-right: none !important;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.15) !important;
     margin: 64px 0 0 0 !important; /* Flush left, under topbar */
     border-radius: 0 !important;
     height: calc(100vh - 64px) !important;
@@ -144,7 +142,7 @@ h3 { font-size: 1.5rem !important; font-weight: 600 !important; }
 }
 
 .main_menu li.separator {
-    border-top: 1px solid rgba(0,0,0,0.06) !important;
+    border-top: 1px solid rgba(255,255,255,0.08) !important;
     margin: 20px 12px 20px 12px !important;
 }
 
@@ -152,7 +150,7 @@ h3 { font-size: 1.5rem !important; font-weight: 600 !important; }
     font-family: var(--font-sidebar) !important;
     font-weight: 500 !important;
     font-size: 1.05rem !important;
-    color: #334155 !important; /* Dark Slate */
+    color: #94a3b8 !important; /* Slate 400 */
     border-radius: 12px !important;
     margin: 4px 0 !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -167,15 +165,15 @@ h3 { font-size: 1.5rem !important; font-weight: 600 !important; }
 }
 
 .main_menu li a:hover {
-    background: #f8fafc !important; /* Slate 50 */
-    color: #4f46e5 !important; /* Indigo 600 */
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #f8fafc !important; /* Slate 50 */
     transform: none !important;
 }
 
 .main_menu li.current_nav > a,
 .main_menu li.current_page > a {
-    background: #f5f3ff !important; /* Violet 50 */
-    color: #6d28d9 !important; /* Violet 700 */
+    background: #1e1b4b !important; /* Deep Indigo 950 */
+    color: #a5b4fc !important; /* Indigo 300 */
     box-shadow: none !important;
     transform: none !important;
     font-weight: 600 !important;
@@ -190,7 +188,7 @@ h3 { font-size: 1.5rem !important; font-weight: 600 !important; }
     transform: translateY(-50%);
     width: 5px;
     height: 55%;
-    background: #6d28d9 !important; /* Violet 700 */
+    background: #818cf8 !important; /* Indigo 400 */
     border-radius: 8px 0 0 8px;
 }
 
@@ -205,12 +203,12 @@ h3 { font-size: 1.5rem !important; font-weight: 600 !important; }
 
 .main_menu li a:hover i {
     transform: scale(1.1) !important;
+    color: #f8fafc !important;
 }
 
 .main_menu li.current_nav > a i,
-.main_menu li.current_page > a i,
-.main_menu li a:hover i {
-    color: inherit !important;
+.main_menu li.current_page > a i {
+    color: #818cf8 !important; /* Indigo 400 */
 }
 
 /* Arrow icon for dropdowns */
@@ -219,18 +217,18 @@ h3 { font-size: 1.5rem !important; font-weight: 600 !important; }
     position: absolute;
     top: 16px;
     right: 16px;
-    color: #94a3b8 !important;
+    color: #64748b !important;
     font-size: 1.2rem !important;
-    transition: transform 0.2s ease !important;
+    transition: transform 0.2s ease, color 0.2s ease !important;
 }
 
 .main_menu li.has_dropdown:hover::after {
-    color: #0f172a !important;
+    color: #f8fafc !important;
 }
 
 .main_menu li.has_dropdown.current_nav::after {
     transform: rotate(90deg) !important;
-    color: #4F46E5 !important;
+    color: #818cf8 !important;
 }
 
 /* Submenu */
@@ -240,22 +238,23 @@ h3 { font-size: 1.5rem !important; font-weight: 600 !important; }
     box-shadow: none !important;
     padding: 4px 0 4px 16px !important;
     margin-left: 20px !important;
-    border-left: 1px solid #cbd5e1 !important; /* Slate 300 */
+    border-left: 1px solid rgba(255,255,255,0.1) !important;
 }
 .main_menu li ul li a {
     padding: 10px 16px 10px 24px !important;
     font-size: 0.95rem !important;
     font-weight: 500 !important;
-    color: #64748b !important;
+    color: #94a3b8 !important;
     margin: 2px 0 !important;
     position: relative;
 }
-.main_menu li ul li a:hover,
-.main_menu li ul li.current_page > a {
-    color: #6d28d9 !important;
+.main_menu li ul li a:hover {
+    color: #f8fafc !important;
     background: transparent !important;
 }
 .main_menu li ul li.current_page > a {
+    color: #a5b4fc !important;
+    background: transparent !important;
     font-weight: 600 !important;
 }
 .main_menu li ul li.current_page > a::before {
