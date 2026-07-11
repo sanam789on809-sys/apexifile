@@ -201,6 +201,7 @@ define('TABLE_TICKETS', TABLES_PREFIX . 'tickets');
 define('TABLE_TICKET_REPLIES', TABLES_PREFIX . 'ticket_replies');
 define('TABLE_APPROVALS', TABLES_PREFIX . 'approvals');
 define('TABLE_FILE_VERSIONS', TABLES_PREFIX . 'file_versions');
+define('TABLE_CHAT_MESSAGES', TABLES_PREFIX . 'chat_messages');
 
 
 $original_basic_tables = array(
