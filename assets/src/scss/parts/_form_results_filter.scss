@@ -1,0 +1,19 @@
+.form_results_filter {
+    margin:1.5rem 0 0;
+
+    a {
+        text-decoration:underline;
+        display:inline-block;
+        padding-right:5px;
+        margin-right:5px;
+        border-right:1px solid var(--border-medium);
+
+        &:last-child {
+            border-right:none;
+        }
+
+        &.filter_option {
+            color:var(--text-muted);
+        }
+    }
+}

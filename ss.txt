@@ -1,0 +1,301 @@
+SOFTWARE REQUIREMENTS SPECIFICATION (SRS)
+Project Title
+Document Management System
+1. Introduction
+1.1 Purpose
+The purpose of this system is to provide a secure web-based document management and workflow platform for an accounting and audit firm. The system will improve collaboration among employees, facilitate secure document sharing between departments and clients, manage task assignments, and provide a centralized repository for all organizational documents.
+1.2 Objectives
+The system should:
+- Provide secure storage for documents.
+- Allow departmental collaboration.
+- Control document sharing using an approval process.
+- Enable communication between staff and clients.
+- Improve workflow management through task assignment.
+- Provide clients with a secure portal for uploading and downloading files.
+- Maintain audit trails for accountability.
+- Ensure role-based access control.
+2. User Roles
+2.1 System Administrator
+The administrator shall:
+- Manage all users.
+- Create departments.
+- Create user roles.
+- Assign users to departments.
+- Activate or deactivate accounts.
+- Reset passwords.
+- View all files.
+- View system logs.
+- Configure system settings.
+- Generate reports.
+- Monitor storage usage.
+- Manage client accounts.
+- Oversee approval processes.
+2.2 Department Head
+Department Heads shall be able to:
+- Manage departmental files.
+- Approve or reject document sharing requests.
+- Create folders.
+- Upload files.
+- Share files within the department.
+- Approve sharing with other departments.
+- Assign tasks.
+- Monitor task progress.
+- View completed tasks.
+- Generate departmental reports.
+2.3 Employee
+Employees shall be able to:
+- Login securely.
+- Upload files.
+- Create folders.
+- Organize files.
+- Share files within their department.
+- Request approval for inter-department sharing.
+- View files shared with them.
+- Download files.
+- Search documents.
+- Complete assigned tasks.
+- Update task progress.
+- Receive notifications.
+2.4 Client
+Clients shall be able to:
+- Register.
+- Verify email.
+- Login.
+- Update profile.
+- Upload documents.
+- Create folders.
+- View documents shared by staff.
+- Download permitted files.
+- Submit support requests.
+- View support responses.
+- Receive notifications.
+3. Functional Requirements
+Module 1: Authentication
+The system shall provide:
+- User registration.
+- Client registration.
+- Secure login.
+- Password reset.
+- Email verification.
+- Two-factor authentication (optional).
+- Session timeout.
+- Role-based authentication.
+Module 2: Dashboard
+The dashboard shall display:
+Employees
+- Assigned tasks
+- Recent documents
+- Notifications
+- Shared files
+- Storage usage
+Department Heads
+- Pending approvals
+- Team tasks
+- Department statistics
+- Recent uploads
+Administrator
+- Number of users
+- Departments
+- Clients
+- Total documents
+- Storage usage
+- Pending approvals
+- System logs
+Clients
+- Uploaded files
+- Shared documents
+- Support tickets
+- Notifications
+Module 3: Department Management
+Administrator shall:
+- Create departments
+- Edit departments
+- Delete departments
+- Assign department heads
+- Move employees
+Examples
+- Audit
+- Accounting
+- Payroll
+- Tax
+- Administration
+- Human Resources
+Module 4: File Management
+The system shall allow users to:
+Create folders
+Example
+Audit
+- 2026
+- 2025
+- Company A
+- Company B
+Upload files
+Supported formats:
+- PDF
+- Word
+- Excel
+- PowerPoint
+- Images
+- ZIP
+- CSV
+Users shall be able to:
+- Rename files
+- Delete files
+- Move files
+- Copy files
+- Download files
+- Preview files
+- Version files
+- Restore previous versions
+Module 5: File Sharing
+Within Department
+Employees can:
+- Share files instantly with departmental members.
+Between Departments
+Workflow:
+Employee → Share Request → Department Head Approval → Approved → Shared with another department
+If rejected:
+- Employee receives notification.
+- File remains private.
+Module 6: Client File Sharing
+Employees can:
+- Share documents with clients.
+Clients can:
+- View files.
+- Download files.
+Employees can:
+- Stop sharing.
+- Set expiry dates.
+- Protect files with passwords.
+Module 7: Approval Workflow
+Approval request shall include:
+- File name
+- Requestor
+- Department
+- Destination department
+- Reason
+- Date
+Department Head can:
+- Approve
+- Reject
+- Comment
+Notifications shall be sent automatically.
+Module 8: Task Management
+Department Heads shall assign tasks.
+Example
+Task: Prepare Financial Statement
+Assigned to: John
+Related File: ABC Ltd Financials
+Due Date: 30 July 2026
+Status: Pending
+Employee updates:
+- In Progress
+- Waiting Review
+- Completed
+Department Head receives notification.
+Module 9: Notifications
+Notifications shall include:
+- File shared
+- Approval received
+- Approval rejected
+- Task assigned
+- Task completed
+- Client uploaded document
+- Support ticket response
+Notifications shall appear:
+- Dashboard
+- Email (optional)
+Module 10: Client Portal
+Clients shall have:
+- Dashboard
+- Profile
+- Documents
+- Upload Files
+- Download Files
+- Support
+- Notifications
+Clients can upload:
+- Financial Statements
+- Bank Statements
+- Tax Documents
+- Payroll Files
+- Contracts
+Module 11: Support Module
+Clients can create support tickets.
+Fields
+- Subject
+- Category
+- Priority
+- Message
+- Attachment
+Staff can:
+- Respond
+- Close ticket
+- Reopen ticket
+- Escalate ticket
+Ticket status:
+- Open
+- In Progress
+- Waiting Client
+- Resolved
+- Closed
+Module 12: Search
+Users can search using:
+- File name
+- Client
+- Department
+- Upload date
+- Tags
+- File type
+Advanced filters should be available.
+Module 13: Reports
+Administrator reports
+- User activity
+- Login history
+- Storage usage
+- Client activity
+- File sharing
+- Completed tasks
+- Pending approvals
+Department reports
+- Team productivity
+- Assigned tasks
+- Completed tasks
+- Pending work
+Module 14: Audit Logs
+Every activity shall be logged.
+Example:
+- Login
+- Logout
+- Upload
+- Download
+- Delete
+- Share
+- Approval
+- Task completion
+- Password reset
+Audit logs cannot be edited.
+Module 15: User Management
+Administrator can:
+- Add users
+- Edit users
+- Delete users
+- Suspend users
+- Activate users
+- Assign roles
+- Reset passwords
+Module 16: Security
+The system shall:
+- Enforce role-based permissions.
+- Automatically log inactive users out.
+- Scan uploaded files for malware (recommended).
+- Log all security events.
+4. Non-Functional Requirements
+- File upload up to 500MB.
+- Response time under 3 seconds for normal operations.
+Scalability
+- Support future departments and offices.
+Usability
+- Responsive design.
+- Mobile-friendly interface.
+- Modern dashboard

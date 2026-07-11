@@ -1,0 +1,187 @@
+<?php
+/**
+ * Define the language strings that are used on several parts of
+ * the system, to avoid repetition.
+ */
+
+// System User Roles names
+define('USER_ROLE_LVL_9', __('System Administrator','cftp_admin'));
+define('USER_ROLE_LVL_8', __('Account Manager','cftp_admin'));
+define('USER_ROLE_LVL_7', __('Uploader','cftp_admin'));
+define('USER_ROLE_LVL_0', __('Client','cftp_admin'));
+
+// Strings served as a json array to use in JS
+global $json_strings;
+$json_strings = [
+    'uri' => [
+        'base' => BASE_URI,
+        'public_group' => PUBLIC_GROUP_URL,
+        'public_download' => PUBLIC_DOWNLOAD_URL,
+        'assets_img' => ASSETS_IMG_URL,
+        'widgets' => WIDGETS_URL,
+    ],
+    'login' => [
+        'button_text' => __('Log in','cftp_admin'),
+        'logging_in' => __('Logging in','cftp_admin'),
+        'redirecting' => __('Redirecting','cftp_admin'),
+        'errors' => [
+            'invalid_credentials' => __("The supplied credentials are not valid.",'cftp_admin'),
+            'wrong_username' => __("The supplied username doesn't exist.",'cftp_admin'),
+            'wrong_password' => __("The supplied password is incorrect.",'cftp_admin'),
+            'account_inactive' => __("This account is not active.",'cftp_admin'),
+            'account_inactive_notice' => __("If you just registered, please wait until a system administrator approves your account.",'cftp_admin'),
+            'no_self_registration' => __('Client self registration is not allowed. If you need an account, please contact a system administrator.','cftp_admin'),
+            'timeout' => __('Session timed out. Please log in again.','cftp_admin'),
+            '2fa' => [
+                'invalid' => __('Code is not valid','cftp_admin'),
+                'used' => __('Code has already been used','cftp_admin'),
+                'expired' => __('Code expired','cftp_admin'),
+                'throttle' => __('You have pending codes to verify. Please wait until %s to request a new one.','cftp_admin'),
+                'totp_invalid' => __('The code is not valid. Please try again.','cftp_admin'),
+                'backup_invalid' => __('Invalid backup code.','cftp_admin'),
+                'backup_used' => __('This backup code has already been used.','cftp_admin'),
+            ]
+        ],
+    ],
+    'translations' => [
+        'cannot_load_content' => __('Content could not be loaded','cftp_admin'),
+        'public_group_note' => __('Send this URL to someone to view the allowed group contents according to your privacy settings.','cftp_admin'),
+        'public_file_note' => __('Send this URL to someone to download the file without registering or logging in.','cftp_admin'),
+        'copy_click_select' => __('Click the URL to select it and copy','cftp_admin'),
+        'click_to_copy' => __('Click to copy','cftp_admin'),
+        'copy_ok' => __('Successfully copied to clipboard','cftp_admin'),
+        'copy_error' => __('Content could not be copied to clipboard','cftp_admin'),
+        'public_url' => __('Public URL','cftp_admin'),
+        'ok' => __('OK','cftp_admin'),
+        'cancel' => __('Cancel','cftp_admin'),
+        'select_one_or_more' => __('Please select at least one item to proceed.','cftp_admin'),
+        'confirm_delete' => __('You are about to delete %d items. Are you sure you want to continue?','cftp_admin'),
+        'confirm_delete_log' => __('You are about to delete all activities from the log. Only those used for statistics will remain. Are you sure you want to continue?','cftp_admin'),
+        'download_wait' => __('Please wait while your download is prepared.','cftp_admin'),
+        'download_long_wait' => __('This operation could take a few minutes, depending on the size of the files.','cftp_admin'),
+        'confirm_unassign' => __('You are about to unassign %d files from this account. Are you sure you want to continue?','cftp_admin'),
+        'no_results' => __('No results were found.','cftp_admin'),
+        'email_templates' => [
+            'confirm_replace' => __('Please confirm: replace the custom template text with the default one?','cftp_admin'),
+            'loading_error' => __('Error: the content could not be loaded','cftp_admin'),
+        ],
+        'upload_form' => [
+            'no_files' => __("You must select at least one file to upload.",'cftp_admin'),
+            'leave_confirm' => __("Are you sure? Files currently being uploaded will be discarded if you leave this page.",'cftp_admin'),
+            'copy_selection' => __("Copy selection to all files?",'cftp_admin'),
+            'copy_expiration' => __("Copy expiration settings to all files?",'cftp_admin'),
+            'copy_public' => __("Copy public settings to all files?",'cftp_admin'),
+            'copy_hidden' => __("Copy setting to all files?",'cftp_admin'),
+            'some_files_had_errors' => __("Some of your files uploaded correctly, but others could not be uploaded.",'cftp_admin'),
+            'continue_to_editor' => __("Go to the file editor",'cftp_admin'),
+        ],
+        'confirm_generic' => __('Confirm this action?', 'cftp_admin'),
+        'preview_failed' => __('Failed to load file preview', 'cftp_admin'),
+        'failed_loading_resource' => __('Failed to load resource', 'cftp_admin'),
+    ],
+    'thumbnails_regenerate' => [
+        'select_format' => __('Please select at least one image format to process.', 'cftp_admin'),
+        'invalid_dimensions' => __('Thumbnail dimensions must be between 50 and 1000 pixels.', 'cftp_admin'),
+        'invalid_date_range' => __('Start date cannot be later than end date.', 'cftp_admin'),
+        'ajax_pending' => __('AJAX processing will be implemented in the next step.', 'cftp_admin'),
+        'confirm_regeneration' => __('This will regenerate thumbnails for all selected images. Continue?', 'cftp_admin'),
+        'processing' => __('Processing...', 'cftp_admin'),
+        'processing_title' => __('Thumbnail Regeneration Progress', 'cftp_admin'),
+        'processed' => __('Processed', 'cftp_admin'),
+        'failed' => __('Failed', 'cftp_admin'),
+        'total' => __('Total', 'cftp_admin'),
+        'show_log' => __('Show Log', 'cftp_admin'),
+        'hide_log' => __('Hide Log', 'cftp_admin'),
+        'process_completed' => __('Process completed: {processed} processed, {failed} failed out of {total} total.', 'cftp_admin'),
+        'completed_successfully' => __('Thumbnail regeneration completed successfully! {processed} files processed.', 'cftp_admin'),
+        'completed_with_errors' => __('Thumbnail regeneration completed with errors. {processed} files processed successfully, {failed} files failed.', 'cftp_admin'),
+        'start_regeneration' => __('Start Thumbnail Regeneration', 'cftp_admin'),
+        'no_formats_selected' => __('No formats selected', 'cftp_admin'),
+        'select_one_format' => __('Please select at least one image format to process.', 'cftp_admin'),
+        'invalid_dimensions_title' => __('Invalid dimensions', 'cftp_admin'),
+        'start_regeneration_title' => __('Start Thumbnail Regeneration?', 'cftp_admin'),
+        'process_will_message' => __('This process will:', 'cftp_admin'),
+        'replace_thumbnails' => __('Replace all existing thumbnails for the selected images', 'cftp_admin'),
+        'take_minutes' => __('Take several minutes to complete for large batch operations', 'cftp_admin'),
+        'run_background' => __('Run in the background using AJAX', 'cftp_admin'),
+        'keep_page_open' => __('Require you to keep this page open while processing', 'cftp_admin'),
+        'process_complete_title' => __('Process Complete', 'cftp_admin'),
+        'process_complete_errors_title' => __('Process Complete with Errors', 'cftp_admin'),
+        'invalid_date_range_title' => __('Invalid Date Range', 'cftp_admin'),
+    ],
+    'ldap' => [
+        'connection_error' => __('LDAP connection error: %s', 'cftp_admin'),
+        'bind_error' => __('Error binding to LDAP server.', 'cftp_admin'),
+        'invalid_credentials' => __('The supplied email or password does not match an existing record.', 'cftp_admin'),
+        'user_not_found' => __('The supplied email or password does not match an existing record.', 'cftp_admin'),
+        'account_not_authorized' => __('Your LDAP account is not authorized. Please contact an administrator.', 'cftp_admin'),
+        'user_creation_error' => __('Error creating user account from LDAP.', 'cftp_admin'),
+        'not_enabled' => __('LDAP authentication is not enabled.', 'cftp_admin'),
+        'required_fields' => __('Email and password are required.', 'cftp_admin'),
+        'email_password_empty' => __('Email and password cannot be empty.', 'cftp_admin'),
+        'user_created' => __('User account created successfully from LDAP.', 'cftp_admin'),
+        'user_synced' => __('User profile synchronized from LDAP.', 'cftp_admin'),
+        'login_successful' => __('LDAP authentication successful.', 'cftp_admin'),
+    ],
+    'updates' => [
+        'cannot_update' => __('Cannot Update', 'cftp_admin'),
+        'error_checking_requirements' => __('Error checking requirements', 'cftp_admin'),
+        'downloading_update' => __('Downloading update...', 'cftp_admin'),
+        'creating_backup' => __('Creating backup...', 'cftp_admin'),
+        'installing_files' => __('Installing files...', 'cftp_admin'),
+        'finalizing_update' => __('Finalizing update...', 'cftp_admin'),
+        'processing' => __('Processing...', 'cftp_admin'),
+        'update_failed' => __('Update failed', 'cftp_admin'),
+        'rolling_back' => __('Rolling back changes...', 'cftp_admin'),
+        'rollback_successful' => __('Rollback completed successfully', 'cftp_admin'),
+        'rollback_failed' => __('Rollback failed', 'cftp_admin'),
+        'update_complete' => __('Update completed successfully', 'cftp_admin'),
+    ],
+    'validation' => [
+        'errors_found_title' => __('The following errors were found','cftp_admin'),
+        'default' => __('Validation "%s" failed for field "%s"','cftp_admin'),
+        'recaptcha' => __('reCAPTCHA verification failed','cftp_admin'),
+        'no_name' => __('Name was not completed','cftp_admin'),
+        'no_client' => __('No client was selected','cftp_admin'),
+        'no_user' => __('Username was not completed','cftp_admin'),
+        'no_pass' => __('Password was not completed','cftp_admin'),
+        'no_pass2' => __('Password verification was not completed','cftp_admin'),
+        'no_email' => __('E-mail was not completed','cftp_admin'),
+        'no_title' => __('Title was not completed','cftp_admin'),
+        'invalid_email' => __('E-mail address is not valid','cftp_admin'),
+        'alpha_user' => __('Username must be alphanumeric and may contain dot or underscores (a-z, A-Z, 0-9, _ and . allowed)','cftp_admin'),
+        'alpha_pass' => __('Password must be alphanumeric (a-z,A-Z,0-9 allowed)','cftp_admin'),
+        'match_pass' => __('Passwords do not match','cftp_admin'),
+        'rules_pass' => __('Password does not meet the required characters rules','cftp_admin'),
+        'file_size' => __('File size value must be a whole number','cftp_admin'),
+        'disk_quota' => __('Disk quota value must be a whole number','cftp_admin'),
+        'no_role' => __('User role was not specified','cftp_admin'),
+        'user_exists' => __('An account with this username already exists.','cftp_admin'),
+        'email_exists' => __('An account with this e-mail address already exists.','cftp_admin'),
+        'valid_pass' => __('Your password can only contain letters, numbers and the following characters:','cftp_admin'),
+        'valid_chars' => ('` ! " ? $ ? % ^ & * ( ) _ - + = { [ } ] : ; @ ~ # | < , > . ? \' / \ '),
+        'complete_all_options' => __('Please complete all the fields.','cftp_admin'),
+        'enum_invalid' => __('Type is not valid','cftp_admin'),
+        'numeric' => __('Value %s is not a number','cftp_admin'),
+        
+        // Validation strings for the length of usernames and passwords
+        'length_user' => sprintf(__('Length should be between %d and %d characters long', 'cftp_admin'), MIN_USER_CHARS, MAX_USER_CHARS),
+        'length_pass' => sprintf(__('Length should be between %d and %d characters long', 'cftp_admin'), MIN_PASS_CHARS, MAX_PASS_CHARS),
+
+        // Password requirements
+        'req_upper' => __('1 uppercase character','cftp_admin'),
+        'req_lower' => __('1 lowercase character','cftp_admin'),
+        'req_number' => __('1 number','cftp_admin'),
+        'req_special' => __('1 special character','cftp_admin'),
+        
+        // Installation strings
+        'install_no_sitename' => __('Sitename was not completed.','cftp_admin'),
+        'install_no_baseuri' => __('CGT URI was not completed.','cftp_admin'),
+    ],
+    'character_limits' => [
+        'user_min' => MIN_USER_CHARS,
+        'user_max' => MAX_USER_CHARS,
+        'password_min' => MIN_PASS_CHARS,
+        'password_max' => MAX_PASS_CHARS,
+    ]
+];

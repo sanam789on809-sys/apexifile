@@ -1,0 +1,23 @@
+.context-menu-orange-theme {
+    background-color: var(--bg-card);
+    box-shadow: var(--global_box_shadow);
+
+    hr {
+        background-color: var(--border-light);
+    }
+
+    // text color for each item
+    & > *:not(hr) {
+        color: var(--text-primary);
+
+        &:hover {
+            background: var(--bg-hover);
+            color: var(--main_color);
+        }
+    }
+}
+
+.custom-context-menu-cls {
+    width: 150px;
+    font-family: "Roboto", sans-serif;
+}
