@@ -1,5 +1,23 @@
 <?php
 /**
+ * Main application bootstrap file
+ */
+
+// Debugging: Force display of all errors to bypass server config causing 500 errors
+set_exception_handler(function($e) {
+    die("<b>Uncaught exception:</b> " . $e->getMessage() . "<br>in <b>" . $e->getFile() . "</b> on line <b>" . $e->getLine() . "</b><br><pre>" . $e->getTraceAsString() . "</pre>");
+});
+register_shutdown_function(function() {
+    $error = error_get_last();
+    if ($error !== null && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        die("<b>Fatal error:</b> " . $error['message'] . "<br>in <b>" . $error['file'] . "</b> on line <b>" . $error['line'] . "</b>");
+    }
+});
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+/**
  * Requirements of basic system files.
  */
 define('ROOT_DIR', dirname(__FILE__));
