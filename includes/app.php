@@ -48,14 +48,14 @@ if ( !file_exists(CONFIG_FILE) ) {
  * on the footer blocks.
  *
  */
-define('SYSTEM_NAME','CGT');
-define('SYSTEM_URI','https://www.projectsend.org/');
-define('SYSTEM_URI_LABEL','CGT on github');
-define('DONATIONS_URL','https://www.projectsend.org/donations/');
-define('PATREON_URL','https://www.patreon.com/ignacionelson');
-define('OPENCOLLECTIVE_URL', 'https://opencollective.com/projectsend');
-define('REVIEWS_URL', 'https://www.facebook.com/projectsend/');
-define('TRANSLATIONS_URL', 'https://www.projectsend.org/translations/');
+define('SYSTEM_NAME', 'CGT');
+define('SYSTEM_URI', '#');
+define('SYSTEM_URI_LABEL', 'CGT');
+define('DONATIONS_URL','#');
+define('PATREON_URL','#');
+define('OPENCOLLECTIVE_URL', '#');
+define('REVIEWS_URL', '#');
+define('TRANSLATIONS_URL', '#');
 
 /**
  * Current version.
