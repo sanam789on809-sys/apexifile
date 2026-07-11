@@ -68,6 +68,40 @@
                 $avatar_colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#34495e', '#e67e22'];
                 $avatar_color = $avatar_colors[$user_id % count($avatar_colors)];
             ?>
+                <?php 
+                    // Fetch internal notifications
+                    if (class_exists('\ProjectSend\Classes\InternalNotifications')) {
+                        $notifObj = new \ProjectSend\Classes\InternalNotifications();
+                        $unreadCount = $notifObj->getUnreadCount(CURRENT_USER_ID);
+                        $unreadList = $notifObj->getUnread(CURRENT_USER_ID, 5);
+                    } else {
+                        $unreadCount = 0;
+                        $unreadList = [];
+                    }
+                ?>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="notif_dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" >
+                        <i class="fa fa-bell" aria-hidden="true"></i> 
+                        <?php if ($unreadCount > 0): ?>
+                            <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle" style="font-size: 0.6rem;"><?php echo $unreadCount; ?></span>
+                        <?php endif; ?>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="notif_dropdown" style="min-width: 300px;">
+                        <li><h6 class="dropdown-header"><?php _e('Notifications', 'cftp_admin'); ?></h6></li>
+                        <?php if (empty($unreadList)): ?>
+                            <li><span class="dropdown-item text-muted text-center py-3"><?php _e('No new notifications', 'cftp_admin'); ?></span></li>
+                        <?php else: ?>
+                            <?php foreach ($unreadList as $n): ?>
+                                <li>
+                                    <a class="dropdown-item text-wrap border-bottom py-2" style="font-size: 0.9rem;" href="<?php echo BASE_URI; ?>process.php?do=mark_notification_read&id=<?php echo $n['id']; ?>&return_to=<?php echo urlencode($n['link_url']); ?>">
+                                        <?php echo html_output($n['message']); ?>
+                                        <br><small class="text-muted"><?php echo $n['created_at']; ?></small>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
+                </li>
                 <li class="dropdown user-dropdown">
                     <a href="#" class="dropdown-toggle user-trigger" id="user_dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
                         <div class="user-avatar" style="background-color: <?php echo $avatar_color; ?>;">

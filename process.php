@@ -149,6 +149,23 @@ switch ($_GET['do']) {
             ps_redirect(BASE_URI.'dashboard.php');
         }
         break;
+    case 'mark_notification_read':
+        redirect_if_not_logged_in();
+        $notif_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $return_to = isset($_GET['return_to']) ? $_GET['return_to'] : BASE_URI.'dashboard.php';
+        
+        if ($notif_id > 0) {
+            $notif = new \ProjectSend\Classes\InternalNotifications();
+            $notif->markAsRead($notif_id, CURRENT_USER_ID);
+        }
+
+        $parsed_url = parse_url($return_to);
+        if ($parsed_url && (empty($parsed_url['host']) || $parsed_url['host'] === $_SERVER['HTTP_HOST'])) {
+            ps_redirect($return_to);
+        } else {
+            ps_redirect(BASE_URI.'dashboard.php');
+        }
+        break;
     case 'return_files_ids':
         redirect_if_not_logged_in();
         redirect_if_role_not_allowed($allowed_levels);

@@ -163,6 +163,7 @@ define('TABLE_FILES', TABLES_PREFIX . 'files');
 define('TABLE_FILES_RELATIONS', TABLES_PREFIX . 'files_relations');
 define('TABLE_DOWNLOADS', TABLES_PREFIX . 'downloads');
 define('TABLE_NOTIFICATIONS', TABLES_PREFIX . 'notifications');
+define('TABLE_INTERNAL_NOTIFICATIONS', TABLES_PREFIX . 'internal_notifications');
 define('TABLE_OPTIONS', TABLES_PREFIX . 'options');
 define('TABLE_THEME_SETTINGS', TABLES_PREFIX . 'theme_settings');
 define('TABLE_USERS', TABLES_PREFIX . 'users');
@@ -213,6 +214,7 @@ $all_system_tables = array(
     'files_relations',
     'downloads',
     'notifications',
+    'internal_notifications',
     'options',
     'users',
     'groups',

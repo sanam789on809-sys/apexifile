@@ -126,6 +126,22 @@ class Tickets
                 'affected_account' => null,
                 'affected_account_name' => ''
             ]);
+
+            // Add internal notification
+            $notif = new \ProjectSend\Classes\InternalNotifications();
+            $link = BASE_URI . 'tickets-view.php?id=' . $this->id;
+
+            // If the replier is NOT the ticket owner, notify the ticket owner
+            if ($user_id != $this->user_id) {
+                $notif->addNotification($this->user_id, sprintf(__('New reply to your ticket #%s', 'cftp_admin'), $this->id), $link);
+            } else {
+                // If the ticket owner replied, notify admins
+                $stmt = $this->dbh->query("SELECT id FROM " . TABLE_USERS . " WHERE role_id IN (SELECT id FROM " . TABLE_ROLES . " WHERE name IN ('System Administrator', 'Account Manager')) AND active='1'");
+                $admins = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                foreach ($admins as $admin_id) {
+                    $notif->addNotification($admin_id, sprintf(__('New reply on ticket #%s from client', 'cftp_admin'), $this->id), $link);
+                }
+            }
         }
         return $result;
     }
