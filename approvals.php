@@ -11,7 +11,7 @@ $page_id = 'approvals';
 
 // Process actions
 if ($_POST && isset($_POST['action'])) {
-    if (check_csrf_token()) {
+    if (validateCsrfToken()) {
         if ($_POST['action'] == 'request_approval') {
             $approval = new \ProjectSend\Classes\Approvals();
             $approval->set([
@@ -76,7 +76,7 @@ include_once ADMIN_VIEWS_DIR . DS . 'header.php';
                             echo '<td>' . html_output($row['reason']) . '</td>';
                             echo '<td>
                                     <form action="approvals.php" method="post" class="d-inline">
-                                        ' . generate_csrf_input() . '
+                                        <input type="hidden" name="csrf_token" id="csrf_token" value="' . getCsrfToken() . '" />
                                         <input type="hidden" name="action" value="process_approval">
                                         <input type="hidden" name="approval_id" value="' . $row['id'] . '">
                                         <button type="submit" name="status" value="Approved" class="btn btn-sm btn-success"><i class="fa fa-check"></i></button>
@@ -144,7 +144,7 @@ include_once ADMIN_VIEWS_DIR . DS . 'header.php';
       </div>
       <div class="modal-body">
         <form action="approvals.php" method="post">
-            <?php echo generate_csrf_input(); ?>
+            <?php addCsrf(); ?>
             <input type="hidden" name="action" value="request_approval">
             <div class="mb-3">
                 <label for="file_id" class="form-label"><?php _e('Select File ID', 'cftp_admin'); ?></label>

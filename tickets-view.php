@@ -23,7 +23,7 @@ if (CURRENT_USER_LEVEL == 0 && $ticket->user_id != CURRENT_USER_ID) {
 }
 
 if ($_POST) {
-    if (check_csrf_token()) {
+    if (validateCsrfToken()) {
         if (!empty($_POST['reply_message'])) {
             $ticket->addReply(CURRENT_USER_ID, $_POST['reply_message']);
             $flash->success(__('Reply added successfully.', 'cftp_admin'));
@@ -73,7 +73,7 @@ include_once ADMIN_VIEWS_DIR . DS . 'header.php';
                 <hr class="my-4">
                 <h4><?php _e('Add Reply', 'cftp_admin'); ?></h4>
                 <form action="tickets-view.php?id=<?php echo $ticket->id; ?>" method="post">
-                    <?php echo generate_csrf_input(); ?>
+                    <?php addCsrf(); ?>
                     <div class="mb-3">
                         <textarea class="form-control" name="reply_message" rows="4" required></textarea>
                     </div>
@@ -112,7 +112,7 @@ include_once ADMIN_VIEWS_DIR . DS . 'header.php';
                 <?php if (CURRENT_USER_LEVEL != 0): ?>
                 <h5><?php _e('Admin Actions', 'cftp_admin'); ?></h5>
                 <form action="tickets-view.php?id=<?php echo $ticket->id; ?>" method="post">
-                    <?php echo generate_csrf_input(); ?>
+                    <?php addCsrf(); ?>
                     <div class="mb-3">
                         <select name="new_status" class="form-select">
                             <option value="Open" <?php if($ticket->status=='Open') echo 'selected'; ?>><?php _e('Open', 'cftp_admin'); ?></option>

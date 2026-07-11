@@ -18,7 +18,7 @@ if (!$department->get($_GET['id'])) {
 }
 
 if ($_POST) {
-    if (check_csrf_token()) {
+    if (validateCsrfToken()) {
         $department->set([
             'name' => $_POST['name'],
             'description' => $_POST['description']
@@ -67,7 +67,7 @@ include_once ADMIN_VIEWS_DIR . DS . 'header.php';
             </div>
             <div class="ps-card-body">
                 <form action="departments-edit.php?id=<?php echo $department->id; ?>" method="post">
-                    <?php echo generate_csrf_input(); ?>
+                    <?php addCsrf(); ?>
                     <div class="mb-3">
                         <label for="name" class="form-label"><?php _e('Department Name', 'cftp_admin'); ?></label>
                         <input type="text" class="form-control" id="name" name="name" value="<?php echo html_output($department->name); ?>" required>
