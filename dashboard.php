@@ -30,12 +30,16 @@ if (current_user_can('view_dashboard_counters')) {
 // Check user's department role
 $dept_id = null;
 $is_head = false;
-$stmt = $dbh->prepare("SELECT department_id, is_head FROM " . TABLE_DEPARTMENT_MEMBERS . " WHERE user_id = :uid");
-$stmt->bindValue(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
-$stmt->execute();
-if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $dept_id = $row['department_id'];
-    $is_head = ($row['is_head'] == 1);
+try {
+    $stmt = $dbh->prepare("SELECT department_id, is_head FROM " . TABLE_DEPARTMENT_MEMBERS . " WHERE user_id = :uid");
+    $stmt->bindValue(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
+    $stmt->execute();
+    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $dept_id = $row['department_id'];
+        $is_head = ($row['is_head'] == 1);
+    }
+} catch (PDOException $e) {
+    // Ignore, table will be created by DatabaseUpgrade shortly
 }
 ?>
 <div class="dashboard-widgets-container" id="dashboard-widgets">

@@ -11,11 +11,15 @@ $page_id = 'tasks';
 
 // Check if user is a department head for ANY department
 $is_dept_head = false;
-$stmt_check = $dbh->prepare("SELECT COUNT(*) FROM " . TABLE_DEPARTMENT_MEMBERS . " WHERE user_id = :uid AND is_head = 1");
-$stmt_check->bindParam(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
-$stmt_check->execute();
-if ($stmt_check->fetchColumn() > 0) {
-    $is_dept_head = true;
+try {
+    $stmt_check = $dbh->prepare("SELECT COUNT(*) FROM " . TABLE_DEPARTMENT_MEMBERS . " WHERE user_id = :uid AND is_head = 1");
+    $stmt_check->bindParam(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
+    $stmt_check->execute();
+    if ($stmt_check->fetchColumn() > 0) {
+        $is_dept_head = true;
+    }
+} catch (PDOException $e) {
+    // Table might not exist yet, will be created when header.php is included
 }
 
 if ($_POST && isset($_POST['create_task'])) {
