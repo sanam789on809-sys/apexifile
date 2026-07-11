@@ -241,7 +241,7 @@ class CustomAsset
         $this->sql_query->bindParam(':position', $this->position);
         $this->sql_query->bindParam(':enabled', $this->enabled, PDO::PARAM_INT);
         $current_user_id = defined('CURRENT_USER_ID') ? \CURRENT_USER_ID : 1;
-        $this->sql_query->bindParam(':created_by', $current_user_id, PDO::PARAM_INT);
+        $this->sql_query->bindValue(':created_by', $current_user_id, PDO::PARAM_INT);
         $this->sql_query->execute();
 
         $this->id = $this->dbh->lastInsertId();

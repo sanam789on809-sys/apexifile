@@ -16,7 +16,7 @@ if (isset($_GET['mark_read'])) {
     if (isset($_GET['csrf_token']) && $_GET['csrf_token'] === getCsrfToken()) {
         $stmt = $dbh->prepare("UPDATE " . TABLE_INTERNAL_NOTIFICATIONS . " SET is_read = 1 WHERE id = :id AND user_id = :uid");
         $stmt->bindParam(':id', $_GET['mark_read'], PDO::PARAM_INT);
-        $stmt->bindParam(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
+        $stmt->bindValue(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
         $stmt->execute();
         ps_redirect('notifications.php');
     }
@@ -26,7 +26,7 @@ if (isset($_GET['mark_read'])) {
 if (isset($_GET['mark_all_read'])) {
     if (isset($_GET['csrf_token']) && $_GET['csrf_token'] === getCsrfToken()) {
         $stmt = $dbh->prepare("UPDATE " . TABLE_INTERNAL_NOTIFICATIONS . " SET is_read = 1 WHERE user_id = :uid");
-        $stmt->bindParam(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
+        $stmt->bindValue(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
         $stmt->execute();
         ps_redirect('notifications.php');
     }
@@ -51,7 +51,7 @@ include_once ADMIN_VIEWS_DIR . DS . 'header.php';
                     <?php
                     // Get all notifications (read and unread)
                     $stmt = $dbh->prepare("SELECT * FROM " . TABLE_INTERNAL_NOTIFICATIONS . " WHERE user_id = :user_id ORDER BY created_at DESC LIMIT 50");
-                    $stmt->bindParam(':user_id', CURRENT_USER_ID, PDO::PARAM_INT);
+                    $stmt->bindValue(':user_id', CURRENT_USER_ID, PDO::PARAM_INT);
                     $stmt->execute();
                     $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

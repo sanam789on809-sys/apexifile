@@ -13,7 +13,7 @@ $page_id = 'tasks';
 $is_dept_head = false;
 try {
     $stmt_check = $dbh->prepare("SELECT COUNT(*) FROM " . TABLE_DEPARTMENT_MEMBERS . " WHERE user_id = :uid AND is_head = 1");
-    $stmt_check->bindParam(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
+    $stmt_check->bindValue(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
     $stmt_check->execute();
     if ($stmt_check->fetchColumn() > 0) {
         $is_dept_head = true;
@@ -28,7 +28,7 @@ if ($_POST && isset($_POST['create_task'])) {
     } else {
         // Assume department_id is known or selected, for now just use the first department they head
         $dept_stmt = $dbh->prepare("SELECT department_id FROM " . TABLE_DEPARTMENT_MEMBERS . " WHERE user_id = :uid AND is_head = 1 LIMIT 1");
-        $dept_stmt->bindParam(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
+        $dept_stmt->bindValue(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
         $dept_stmt->execute();
         $dept_id = $dept_stmt->fetchColumn();
 
@@ -65,7 +65,7 @@ if ($_POST && isset($_POST['update_task'])) {
         $stmt_update = $dbh->prepare("UPDATE " . TABLE_TASKS . " SET status = :status WHERE id = :id AND assignee_id = :uid");
         $stmt_update->bindParam(':status', $new_status);
         $stmt_update->bindParam(':id', $task_id, PDO::PARAM_INT);
-        $stmt_update->bindParam(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
+        $stmt_update->bindValue(':uid', CURRENT_USER_ID, PDO::PARAM_INT);
         
         if ($stmt_update->execute()) {
             $flash->success(__('Task status updated successfully.', 'cftp_admin'));
