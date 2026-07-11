@@ -36,25 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <h3><strong>❤️ <?php _e('CGT needs your help!', 'cftp_admin');?></strong></h3>
-                    <p><?php _e('Please remember that this tool is free software.', 'cftp_admin'); ?></p>
-                    <p><?php _e('It is made with love during the hard-to-find free time of mainly one developer.','cftp_admin'); ?></p>
-                    <p><?php _e('With as little as <strong>$2 per month</strong> you can help the project stay active and updated.','cftp_admin'); ?></p>
-                    <p>
-                        <a href="<?php echo DONATIONS_URL; ?>" target="_blank" class="text-decoration-underline"><?php _e('Please consider making a donation to support further development.', 'cftp_admin'); ?>
-                    </a>
-                    <p><?php _e('Thank you!', 'cftp_admin'); ?></p>
-                    <h3><?php _e('How to collaborate','cftp_admin'); ?></h3>
-                    <div id="upgrade_actions mt-5">
-                        <a class="btn btn-lg btn-primary" role="button" href="<?php echo PATREON_URL; ?>" target="_blank"><?php _e('Monthly (Patreon)','cftp_admin'); ?></a>
-                        <a class="btn btn-lg btn-primary" role="button" href="<?php echo OPENCOLLECTIVE_URL; ?>" target="_blank"><?php _e('One time or monthly (Open Collective)','cftp_admin'); ?></a>
-                        <a class="btn btn-lg btn-warning" role="button" href="<?php echo REVIEWS_URL; ?>" target="_blank"><?php _e('Leave a review','cftp_admin'); ?></a>
-                        <!-- <a class="btn btn-lg btn-primary" role="button" href="mailto:contact@projectsend.org" target="_blank"><?php _e('Send a message','cftp_admin'); ?></a> -->
-                        <form method="post" action="<?php echo BASE_URI; ?>process.php?do=dismiss_upgraded_notice&return_to=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>" class="d-inline">
-                                            <?php addCsrf(); ?>
-                                            <button type="submit" class="btn btn-md btn-default"><?php _e('Dismiss message','cftp_admin'); ?></button>
-                                        </form>
-                    </div>
+
                 </div>
             </div>
         </div>

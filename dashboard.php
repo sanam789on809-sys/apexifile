@@ -96,11 +96,7 @@ if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         </div>
     <?php } ?>
 
-    <?php if (current_user_can('view_news')) { ?>
-        <div class="widget-container" data-widget="news">
-            <?php include_once WIDGETS_FOLDER . 'news.php'; ?>
-        </div>
-    <?php } ?>
+
 
     <?php if (current_user_can('view_system_info')) { ?>
         <div class="widget-container" data-widget="system-info">
