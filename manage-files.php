@@ -107,6 +107,12 @@ $filter_options_assigned = array(
     'not_assigned' => __('Not assigned', 'cftp_admin'),
 );
 
+function update_workflow_status($file_id, $status) {
+    global $dbh;
+    $stmt = $dbh->prepare("UPDATE " . TABLE_FILES . " SET workflow_status = :status WHERE id = :id");
+    $stmt->execute([':status' => $status, ':id' => $file_id]);
+}
+
 // Apply the corresponding action to the selected files.
 if (isset($_POST['action'])) {
     if (!empty($_POST['batch'])) {
@@ -142,6 +148,24 @@ if (isset($_POST['action'])) {
                 }
 
                 $flash->success(__('The selected files were marked as hidden.', 'cftp_admin'));
+                break;
+            case 'status_pending':
+                foreach ($selected_files as $file_id) {
+                    update_workflow_status($file_id, 'Pending');
+                }
+                $flash->success(__('Workflow status updated to Pending.', 'cftp_admin'));
+                break;
+            case 'status_in_review':
+                foreach ($selected_files as $file_id) {
+                    update_workflow_status($file_id, 'In Review');
+                }
+                $flash->success(__('Workflow status updated to In Review.', 'cftp_admin'));
+                break;
+            case 'status_approved':
+                foreach ($selected_files as $file_id) {
+                    update_workflow_status($file_id, 'Approved');
+                }
+                $flash->success(__('Workflow status updated to Approved.', 'cftp_admin'));
                 break;
             case 'show_everyone':
                 foreach ($selected_files as $file_id) {
@@ -497,6 +521,9 @@ $bulk_actions_items = [
 ];
 if (!current_role_in(['Client'])) {
     $bulk_actions_items['zip'] = __('Download zipped', 'cftp_admin');
+    $bulk_actions_items['status_pending'] = __('Mark Workflow: Pending', 'cftp_admin');
+    $bulk_actions_items['status_in_review'] = __('Mark Workflow: In Review', 'cftp_admin');
+    $bulk_actions_items['status_approved'] = __('Mark Workflow: Approved', 'cftp_admin');
     if (!isset($search_on)) {
         $bulk_actions_items['hide_everyone'] = __('Set to hidden from everyone already assigned', 'cftp_admin');
         $bulk_actions_items['show_everyone'] = __('Set to visible to everyone already assigned', 'cftp_admin');
@@ -771,7 +798,12 @@ include_once LAYOUT_DIR . DS . 'folders-nav.php';
                             'condition' => $conditions['can_set_categories'],
                         ),
                         array(
-                            'content' => __('Status', 'cftp_admin'),
+                            'sortable' => true,
+                            'sort_url' => 'workflow_status',
+                            'content' => __('Workflow Status', 'cftp_admin'),
+                        ),
+                        array(
+                            'content' => __('Visibility Status', 'cftp_admin'),
                             'hide' => 'phone',
                             'condition' => $conditions['is_search_on'],
                         ),
@@ -1063,6 +1095,9 @@ include_once LAYOUT_DIR . DS . 'folders-nav.php';
                             array(
                                 'content' => $categories_list,
                                 'condition' => $conditions['can_set_categories'],
+                            ),
+                            array(
+                                'content' => '<span class="badge bg-' . (isset($row['workflow_status']) && $row['workflow_status'] == 'Approved' ? 'success' : (isset($row['workflow_status']) && $row['workflow_status'] == 'In Review' ? 'warning' : 'secondary')) . '">' . html_output(isset($row['workflow_status']) ? $row['workflow_status'] : 'Pending') . '</span>',
                             ),
                             array(
                                 'content' => '<span class="badge bg-' . $status_class . '">' . $status_label . '</span>',

@@ -50,6 +50,7 @@ function get_install_base_queries($params = []) {
                                     `expiry_date` TIMESTAMP NOT NULL DEFAULT "' . $expiry_default . '",
                                     `public_allow` INT(1) NOT NULL default \'0\',
                                     `public_token` varchar(32) NULL,
+                                    `workflow_status` VARCHAR(50) NOT NULL DEFAULT \'Pending\',
                                     `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
                                     PRIMARY KEY (`id`),
                                     FOREIGN KEY (`user_id`) REFERENCES '.TABLE_USERS.'(`id`) ON DELETE CASCADE ON UPDATE CASCADE
